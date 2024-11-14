@@ -11,10 +11,8 @@ import Card from '@mui/joy/Card';
 import CardCover from '@mui/joy/CardCover';
 import CardContent from '@mui/joy/CardContent';
 
-
 const Library = () => {
-
-    const cards = Array.from({ length: 10 }, (_, i) => i + 1); // Example card data
+    const cards = Array.from({ length: 8 }, (_, i) => i + 1); // Example card data
 
     return (
         <Box display="flex" flexDirection="column" gap={4} padding={2}>
@@ -58,141 +56,72 @@ const Library = () => {
                 </Box>
             </Box>
 
-            {/* New Section Below */}
-            <Box 
-            display={"flex"}
-                padding={4} 
-                bgcolor="#f0f4f7" 
-                borderRadius={2} 
-                textAlign="left"
-                width="100%"
-                gap={2}
-            >
-                
-                <Button
-                    variant="contained"
-                    sx={{
-                        padding: "8px 24px",     // Increase button padding
-                        fontSize: "1rem",      // Increase font size
-                        minWidth: "150px",        // Set minimum width
-                        minHeight: "40px",
-                        bgcolor: "white",
-                        borderRadius:"20px",
-                        color: "grey","&:hover": {
-                            bgcolor: "#FFD700",  // Background changes to yellow
-                            color: "green",     // Text changes to green
-                        },
-                        }}
-                    >
-                        Articles
-                    </Button>
-                    <Button
-                    variant="contained"
-                    sx={{
-                        padding: "8px 24px",     // Increase button padding
-                        fontSize: "1rem",      // Increase font size
-                        minWidth: "150px",        // Set minimum width
-                        minHeight: "40px",
-                        bgcolor: "white",
-                        borderRadius:"20px",
-                        color: "grey","&:hover": {
-                            bgcolor: "#FFD700",  // Background changes to yellow
-                            color: "green",     // Text changes to green
-                        },
-                        }}
-                    >
-                        Tutorials
-                    </Button>
-                    <Button
-                    variant="contained"
-                    sx={{
-                        padding: "8px 24px",     // Increase button padding
-                        fontSize: "1rem",      // Increase font size
-                        minWidth: "150px",        // Set minimum width
-                        minHeight: "40px",
-                        bgcolor: "white",
-                        borderRadius:"20px",
-                        color: "grey","&:hover": {
-                            bgcolor: "#FFD700",  // Background changes to yellow
-                            color: "green",     // Text changes to green
-                        },
-                        }}
-                    >
-                        Videos
-                    </Button>
-                    <Button
-                    variant="contained"
-                    sx={{
-                        padding: "8px 24px",     // Increase button padding
-                        fontSize: "1rem",      // Increase font size
-                        minWidth: "150px",        // Set minimum width
-                        minHeight: "40px",
-                        bgcolor: "white",
-                        borderRadius:"20px",
-                        color: "grey","&:hover": {
-                            bgcolor: "#FFD700",  // Background changes to yellow
-                            color: "green",     // Text changes to green
-                        },
-                        }}
-                    >
-                        Certifications
-                    </Button>
-            </Box>
-            <Box
-      component="ul"
-      sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', p: 0, m: 0 }}
+                <Box
+        sx={{
+            display: "flex",
+            overflowX: "auto", // Enable horizontal scrolling
+            gap: 2, // Space between cards
+            padding: 2, // Inner padding
+            "&::-webkit-scrollbar": {
+                height: 8, // Scrollbar height
+            },
+            "&::-webkit-scrollbar-thumb": {
+                backgroundColor: "#888", // Scrollbar color
+                borderRadius: 4,
+            },
+            "&::-webkit-scrollbar-thumb:hover": {
+                backgroundColor: "#555", // Scrollbar hover color
+            },
+        }}
     >
-    
-        <Card component="li" sx={{ minWidth: 150, minHeight:300 ,flexGrow: 1 }}>
-            <CardCover>
-            <img
-                src="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800"
-                srcSet="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800&dpr=2 2x"
-                loading="lazy"
-                alt=""
-            />
-            </CardCover>
-            <CardContent>
-            <TypographyJoy
-                level="body-lg"
-                textColor="#fff"
-                sx={{ fontWeight: 'lg', mt: { xs: 12, sm: 18 }, position: "absolute", bottom:10 }}
+        {cards.map((_, index) => (
+            <Card
+                key={index}
+                sx={{
+                    flex: "1 1 calc(25% - 16px)", // Dynamically adjust to 25% of the container width
+                    minWidth: "150px", // Ensure a minimum width
+                    maxWidth: "400px", // Cap the width for large screens
+                    minHeight: "300px", // Set a consistent minimum height
+                    height: "auto", // Allow height to adjust based on content, but respect minHeight
+                    flexGrow: 1, // Allow dynamic growth in width
+                    borderRadius: 10, // Rounded corners
+                    transition: "all 0.3s ease", // Smooth resizing effect
+                }}
             >
-                Image
-            </TypographyJoy>
-            </CardContent>
-        </Card>
-        <Card component="li" sx={{ minWidth: 150, minHeight:300 ,flexGrow: 1 }}>
-            <CardCover>
-            <video
-                autoPlay
-                loop
-                muted
-                poster="https://assets.codepen.io/6093409/river.jpg"
-            >
-                <source
-                src="https://assets.codepen.io/6093409/river.mp4"
-                type="video/mp4"
-                />
-            </video>
-            </CardCover>
-            <CardContent>
-                <Box>
-                <TypographyJoy
-                    level="body-lg"
-                    textColor="#fff"
-                    sx={{ fontWeight: 'lg', mt: { xs: 12, sm: 18 }, position:"absolute", bottom:10}}
+                <CardCover>
+                    {index % 2 === 0 ? (
+                        <img
+                            src="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800"
+                            alt={`Image ${index + 1}`}
+                            loading="lazy"
+                        />
+                    ) : (
+                        <video autoPlay loop muted>
+                            <source
+                                src="https://assets.codepen.io/6093409/river.mp4"
+                                type="video/mp4"
+                            />
+                        </video>
+                    )}
+                </CardCover>
+                <CardContent>
+                    <TypographyJoy
+                        level="body-lg"
+                        textColor="#fff"
+                        sx={{
+                            fontWeight: "lg",
+                            position: "absolute",
+                            bottom: 10,
+                            left: 10,
+                        }}
                     >
-                    Video
-                </TypographyJoy>
-                </Box>
-                    
-
-            </CardContent>
-      </Card>
+                        {index % 2 === 0 ? "Image" : "Video"}
+                    </TypographyJoy>
+                </CardContent>
+            </Card>
+        ))}
     </Box>
-    </Box>
-        
+        </Box>
     );
 };
 
