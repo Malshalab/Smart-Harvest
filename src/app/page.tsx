@@ -1,4 +1,4 @@
-import Library from "./components/library";
+import Library from "./pages/library";
 
 export default function Home() {
   return (
