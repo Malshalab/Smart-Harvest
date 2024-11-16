@@ -6,7 +6,7 @@ import { Button } from "@mui/material";
 import Card from '@mui/joy/Card';
 import CardCover from '@mui/joy/CardCover';
 import CardContent from '@mui/joy/CardContent';
-import Navbar from "../components/navbar";
+import Navbar from "../../components/navbar";
 
 const Library = () => {
   const cards = [
