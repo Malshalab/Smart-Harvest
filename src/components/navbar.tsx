@@ -4,8 +4,13 @@ import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
@@ -14,14 +19,14 @@ const theme = createTheme({
     fontFamily: "SF Pro, SF Pro Display, SF Pro Text, Arial, sans-serif",
     h1: {
       fontFamily: "SF Pro Display",
-      fontSize: "2.5rem",
-      fontWeight: 400, // Regular weight for hero text
+      fontSize: "4.5rem",
+      fontWeight: 400,
     },
     h6: {
       fontFamily: "SF Pro Display",
       fontSize: "1.25rem",
       fontWeight: 400,
-      color: "#555", // Subtle gray for subtitles
+      color: "#555",
     },
     body1: {
       fontFamily: "SF Pro Text",
@@ -37,16 +42,25 @@ const theme = createTheme({
 });
 
 const Navbar = () => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      {/* Navbar */}
       <AppBar
-        position="static"
+        position="sticky"
         sx={{
-          bgcolor: "white", // White background
-          color: "black", // Black text
-          boxShadow: "none", // Remove shadow for a clean look
+          bgcolor: "white",
+          color: "black",
+          boxShadow: "none",
         }}
       >
         <Container>
@@ -54,7 +68,7 @@ const Navbar = () => {
             disableGutters
             sx={{
               display: "flex",
-              justifyContent: "space-between", // Spacing between left, center, and right sections
+              justifyContent: "space-between",
               alignItems: "center",
             }}
           >
@@ -62,18 +76,40 @@ const Navbar = () => {
             <Box
               sx={{
                 display: "flex",
-                gap: 4, // Even spacing between items
+                gap: 2,
+                alignItems: "center",
               }}
             >
-              <Typography variant="h6" component="div">
+              <Button
+                variant="text"
+                sx={{
+                  textTransform: "none",
+                  fontWeight: 400,
+                  color: "black",
+                }}
+              >
                 Invest
-              </Typography>
-              <Typography variant="h6" component="div">
+              </Button>
+              <Button
+                variant="text"
+                sx={{
+                  textTransform: "none",
+                  fontWeight: 400,
+                  color: "black",
+                }}
+              >
                 About
-              </Typography>
-              <Typography variant="h6" component="div">
+              </Button>
+              <Button
+                variant="text"
+                sx={{
+                  textTransform: "none",
+                  fontWeight: 400,
+                  color: "black",
+                }}
+              >
                 Pricing
-              </Typography>
+              </Button>
             </Box>
 
             {/* Center Section (Logo) */}
@@ -98,16 +134,62 @@ const Navbar = () => {
             <Box
               sx={{
                 display: "flex",
-                gap: 4, // Even spacing between items
+                gap: 2,
+                alignItems: "center",
               }}
             >
-              <Typography variant="h6" component="div">
-                FAQ
-              </Typography>
-              <Typography variant="h6" component="div">
-                Contact
-              </Typography>
+              <Button
+                variant="text"
+                sx={{
+                  textTransform: "none",
+                  fontWeight: 400,
+                  color: "black",
+                }}
+              >
+                Log in
+              </Button>
+              <Button
+                variant="contained"
+                sx={{
+                  textTransform: "none",
+                  fontWeight: 400,
+                  bgcolor: "black",
+                  color: "white",
+                  borderRadius: "20px",
+                  padding: "6px 16px",
+                  ":hover": {
+                    bgcolor: "#333",
+                  },
+                }}
+              >
+                Sign up
+              </Button>
             </Box>
+
+            {/* Mobile Menu */}
+            <IconButton
+              size="large"
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              sx={{ display: { xs: "block", md: "none" } }}
+              onClick={handleMenuOpen}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleMenuClose}
+              sx={{
+                display: { xs: "block", md: "none" },
+              }}
+            >
+              <MenuItem onClick={handleMenuClose}>Invest</MenuItem>
+              <MenuItem onClick={handleMenuClose}>About</MenuItem>
+              <MenuItem onClick={handleMenuClose}>Pricing</MenuItem>
+              <MenuItem onClick={handleMenuClose}>FAQ</MenuItem>
+            </Menu>
           </Toolbar>
         </Container>
       </AppBar>
@@ -122,16 +204,16 @@ const Navbar = () => {
           justifyContent: "center",
           textAlign: "center",
           padding: 4,
+          marginTop: 4,
         }}
       >
         <Box>
           <Typography variant="h1" gutterBottom>
-            Discover Tools And Insights To Make Socially Responsible Investments
-            While Growing Your Portfolio With Confidence
+            Discover Tools and Insights to Make Socially Responsible Investments
           </Typography>
           <Typography variant="h6" gutterBottom>
-            Explore Resources To Empower <br/> Your Growth 
-            Through Sustainable Investments And Opportunities.
+            Explore Resources To Empower <br /> Your Growth Through Sustainable
+            Investments And Opportunities.
           </Typography>
         </Box>
       </Container>
