@@ -1,5 +1,5 @@
 
-import Library from "./library/page";
+import Library from "../pages/events_page";
 import { cookies } from "next/headers";
 export default async function Home() {
 

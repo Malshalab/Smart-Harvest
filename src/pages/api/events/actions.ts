@@ -89,3 +89,5 @@ export async function getEventById(id:number){
     }
     console.log(error)
 }
+
+// Add User to event_registration table - post
