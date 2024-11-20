@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import "@fontsource/roboto/400.css";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography"; // Correct import
 import { Button } from "@mui/material";
