@@ -74,9 +74,12 @@ const Navbar = () => {
               <Typography variant="h6" component="div">
                 Pricing
               </Typography>
-              <Typography variant="h6" component="div">
-                Events
-              </Typography>
+//<<<<<<< admin-portal-integration
+//=======
+ //             <Typography variant="h6" component="div">
+   //             Events
+     //         </Typography>
+//>>>>>>> event_registration
             </Box>
 
             {/* Center Section (Logo) */}
@@ -129,11 +132,20 @@ const Navbar = () => {
       >
         <Box>
           <Typography variant="h1" gutterBottom>
+// <<<<<<< admin-portal-integration
+//            Discover Tools And Insights To Make Socially Responsible Investments
+//            While Growing Your Portfolio With Confidence
+//          </Typography>
+  //        <Typography variant="h6" gutterBottom>
+    //        Explore Resources To Empower <br/> Your Growth 
+      //      Through Sustainable Investments And Opportunities.
+//=======
             Learn More About Sustainability Through Our Events Hosted by Our Subject Matter Experts
           </Typography>
           <Typography variant="h6" gutterBottom>
             Explore and Register Below <br/> 
             For Webinars, Workshops, and Sustainability Events.
+// event_registration
           </Typography>
         </Box>
       </Container>
