@@ -14,12 +14,12 @@ export async function createEvent(newEvent:sh_event){
     const { data, error } = await supabase
         .from(eventTableAlias)
         .insert([
-        {   
-            event_name: newEvent.eventName, 
-            description: newEvent.eventDescription, 
-            event_date: '2024-12-12, 19:00:00', 
-            created_by: 894998 
-        },
+            {   
+                event_name: newEvent.eventName, 
+                description: newEvent.eventDescription, 
+                event_date: '2024-12-12, 19:00:00', 
+                created_by: 894998 
+            },
         ])
         .select()
 
