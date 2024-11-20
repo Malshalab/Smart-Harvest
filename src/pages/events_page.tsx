@@ -1,55 +1,55 @@
-import React from "react";
+"use client"
+import React, { useState, useEffect } from "react";
 import '@fontsource/roboto/400.css';
 import Box from '@mui/material/Box';
 import TypographyJoy from '@mui/joy/Typography';
 import { Button } from "@mui/material";
 import Card from '@mui/joy/Card';
-import CardCover from '@mui/joy/CardCover';
 import CardContent from '@mui/joy/CardContent';
 import Navbar from "../components/navbar";
+import { getEvents } from "./api/events/actions"; // Adjust the import based on where your API function is located
 
-const Library = () => {
-  const cards = [
-    { 
-      type: "text",
-      text: "Webinar: Sustainable Agriculture Practices",
-      description: "Event Description and Date/Time will be available here"
-    },
-    { 
-      type: "text",
-      text: "Workshop: Leveraging IoT and AI for Precision Farming"
-    },
-    { 
-      
-      type: "text", 
-      text: "Webinar: Adapting Farming Systems to Climate Change" 
-    },
-    { 
+// Define types for the event object
+interface Event {
+  event_id: number;
+  event_name: string;
+  description: string;
+  event_date: string;
+  created_at: string;
+  created_by: number;
+}
 
-      type: "text", 
-      text: "Workshop: Farming in the Digital Age: Apps, Software, and Automation"   
-    },
-    { 
+const Library: React.FC = () => {
+  const [events, setEvents] = useState<Event[]>([]); // State to store events
+  const [registrationMessage, setRegistrationMessage] = useState<string | null>(null); // State for registration confirmation message
+
+  // Fetch events when the component mounts
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const { data, error } = await getEvents(); // Fetch events from Supabase
+        if (error) {
+          console.error("Error fetching events:", error);
+        } else {
+          setEvents(data); // Set fetched events to the state
+        }
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      }
+    };
+    fetchEvents();
+  }, []);
+
+  // Handle registration and show confirmation message
+  const handleRegisterClick = (event: Event) => {
+    // Here you could also add logic to save registration details in the database
+    setRegistrationMessage(`You have successfully registered for the event: ${event.event_name}`);
     
-      type: "text", 
-      text: "Event: Smart AgriTech Expo" 
-    },
-    { 
-    
-      type: "text", 
-      text: "Virtual Summit: Vertical Farming" 
-    },
-    { 
-   
-      type: "text", 
-      text: "Event: Sustainability Hackathon" 
-    },
-    { 
-  
-      type: "text", 
-      text: "Panel: Green Energy in Agriculture Forum" 
-    },
-  ];
+    // Clear message after 5 seconds
+    setTimeout(() => {
+      setRegistrationMessage(null);
+    }, 5000);
+  };
 
   return (
     <Box display="flex" flexDirection="column" gap={4} padding={2}>
@@ -57,30 +57,20 @@ const Library = () => {
         <Navbar />
       </Box>
 
-      {/* Button Section */}
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center",
-        }}
-      >
-      </Box>
+      {/* Registration Confirmation Message */}
+      {registrationMessage && (
+        <Box sx={{ padding: 2, backgroundColor: "#e0ffe0", borderRadius: 2, marginBottom: 2 }}>
+          <TypographyJoy level="body-md" textColor="#2e7d32">
+            {registrationMessage}
+          </TypographyJoy>
+        </Box>
+      )}
 
       {/* Cards Section */}
-      <Box
-        sx={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: 2,
-          padding: 2,
-        }}
-      >
-        {cards.map((card, index) => (
+      <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, padding: 2 }}>
+        {events.map((event) => (
           <Card
-            key={index}
+            key={event.event_id}
             sx={{
               flex: "1 1 calc(25% - 16px)",
               minWidth: "200px",
@@ -90,10 +80,8 @@ const Library = () => {
               flexGrow: 1,
               borderRadius: 20,
               transition: "all 0.3s ease",
-              
             }}
           >
-          
             <CardContent>
               {/* Event Title */}
               <TypographyJoy
@@ -107,7 +95,7 @@ const Library = () => {
                   left: 10,
                 }}
               >
-                {card.text}
+                {event.event_name}
               </TypographyJoy>
 
               {/* Event Description */}
@@ -122,30 +110,24 @@ const Library = () => {
                   left: 10,
                 }}
               >
-                {card.description}
+                {event.description}
               </TypographyJoy>
+
               {/* Button at the Bottom */}
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center", // Center the button horizontally
-                marginTop: "auto", // Push button to the bottom
-              }}
-            >
-              <Button
-                sx={{
-                  padding: 1.4,
-                  bgcolor: "#006400",
-                  color: "white",
-                  borderRadius: 8,
-                  ":hover": {
-                    bgcolor: "#228B22",
-                  },
-                }}
-              >
-                Register
-              </Button>
-            </Box>
+              <Box sx={{ display: "flex", justifyContent: "center", marginTop: "auto" }}>
+                <Button
+                  sx={{
+                    padding: 1.4,
+                    bgcolor: "#006400",
+                    color: "white",
+                    borderRadius: 8,
+                    ":hover": { bgcolor: "#228B22" },
+                  }}
+                  onClick={() => handleRegisterClick(event)} // Register user for the event
+                >
+                  Register
+                </Button>
+              </Box>
             </CardContent>
           </Card>
         ))}
