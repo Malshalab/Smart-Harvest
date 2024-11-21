@@ -131,7 +131,6 @@ const Navbar = () => {
           <Typography variant="h6" gutterBottom>
             Explore and Register Below <br/> 
             For Webinars, Workshops, and Sustainability Events.
-// event_registration
           </Typography>
         </Box>
       </Container>

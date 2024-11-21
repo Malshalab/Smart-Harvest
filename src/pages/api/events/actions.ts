@@ -8,16 +8,18 @@ const supabase = await supabaseLocals()
 const eventTableAlias = '09_events'
 
 // Create events
-export async function createEvent(ourEvent:sh_event){
+export async function createEvent(newEvent:sh_event){
     // sh_event should have all fields, aside from those automatically set in supabase:
     // event_id, created_at, created_by
     const { data, error } = await supabase
         .from(eventTableAlias)
         .insert([
-        {   event_name: ourEvent.eventName, 
-            description: ourEvent.eventDescription, 
-            event_date: '2024-12-12, 19:00:00', 
-            created_by: 894998 },
+            {   
+                event_name: newEvent.eventName, 
+                description: newEvent.eventDescription, 
+                event_date: '2024-12-12, 19:00:00', 
+                created_by: 894998 
+            },
         ])
         .select()
 
@@ -30,21 +32,21 @@ export async function createEvent(ourEvent:sh_event){
 }
 
 // Update/Insert (Upsert) Event
-export async function updateEvent(ourEvent:sh_eventUpdated){
+export async function updateEvent(updatedEventDetails:sh_eventUpdated){
     // have upsert as an object of type any, then we can conditionally add properties based on whether 
     // they are null or not, that way we can only update needed properties
     const upsert:any = {}
     // now check which properties are not null/undefined, those that aren't can be added to upsert
-    if(ourEvent.eventName!== null && ourEvent.eventName!==undefined) upsert.event_name = ourEvent.eventName
-    if(ourEvent.eventDate!== null && ourEvent.eventDate!==undefined) upsert.event_date = ourEvent.eventDate
-    if(ourEvent.eventDescription!== null && ourEvent.eventDescription!==undefined) upsert.description = ourEvent.eventDescription
+    if(updatedEventDetails.eventName!== null && updatedEventDetails.eventName!==undefined) upsert.event_name = updatedEventDetails.eventName
+    if(updatedEventDetails.eventDate!== null && updatedEventDetails.eventDate!==undefined) upsert.event_date = updatedEventDetails.eventDate
+    if(updatedEventDetails.eventDescription!== null && updatedEventDetails.eventDescription!==undefined) upsert.description = updatedEventDetails.eventDescription
     // now upsert
     const { data, error } = await supabase
         .from(eventTableAlias)
         .update({ 
             ...upsert
         })
-        .eq('event_id', `${ourEvent.eventId}`)
+        .eq('event_id', `${updatedEventDetails.eventId}`)
         .select()
     //error handling
     if(error){
