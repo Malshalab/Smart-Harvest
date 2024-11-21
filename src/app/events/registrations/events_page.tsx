@@ -1,4 +1,4 @@
-"use client"
+'use client'
 import React, { useState, useEffect } from "react";
 import '@fontsource/roboto/400.css';
 import Box from '@mui/material/Box';
@@ -6,8 +6,9 @@ import TypographyJoy from '@mui/joy/Typography';
 import { Button } from "@mui/material";
 import Card from '@mui/joy/Card';
 import CardContent from '@mui/joy/CardContent';
-import Navbar from "../components/navbar";
-import { getEvents } from "./api/events/actions"; // Adjust the import based on where your API function is located
+import Navbar from "../../../components/navbar";
+import { getEvents } from "../../../pages/api/events/actions";
+import { registerUserToEvent } from "../../../pages/api/registration/actions"; // Import the function
 
 // Define types for the event object
 interface Event {
@@ -22,6 +23,7 @@ interface Event {
 const Library: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]); // State to store events
   const [registrationMessage, setRegistrationMessage] = useState<string | null>(null); // State for registration confirmation message
+  const [loading, setLoading] = useState<boolean>(false); // State to manage loading
 
   // Fetch events when the component mounts
   useEffect(() => {
@@ -41,14 +43,23 @@ const Library: React.FC = () => {
   }, []);
 
   // Handle registration and show confirmation message
-  const handleRegisterClick = (event: Event) => {
-    // Here you could also add logic to save registration details in the database
-    setRegistrationMessage(`You have successfully registered for the event: ${event.event_name}`);
-    
-    // Clear message after 5 seconds
-    setTimeout(() => {
-      setRegistrationMessage(null);
-    }, 5000);
+  const handleRegisterClick = async (event: Event) => {
+    try {
+      setLoading(true); // Set loading state to true
+      const registrationMessage = await registerUserToEvent(event.event_id); // Call the register API
+
+      setRegistrationMessage(registrationMessage); // Show the returned message
+
+      // Clear message after 5 seconds
+      setTimeout(() => {
+        setRegistrationMessage(null);
+      }, 5000);
+    } catch (error) {
+      console.error("Error registering for event:", error);
+      setRegistrationMessage("An error occurred during registration.");
+    } finally {
+      setLoading(false); // Set loading state to false
+    }
   };
 
   return (
@@ -124,8 +135,9 @@ const Library: React.FC = () => {
                     ":hover": { bgcolor: "#228B22" },
                   }}
                   onClick={() => handleRegisterClick(event)} // Register user for the event
+                  disabled={loading} // Disable the button while loading
                 >
-                  Register
+                  {loading ? "Registering..." : "Register"} {/* Show loading state text */}
                 </Button>
               </Box>
             </CardContent>
