@@ -17,7 +17,7 @@ const theme = createTheme({
       fontFamily: "SF Pro Display",
       fontSize: "1.25rem",
       fontWeight: 400,
-      color: "#555",
+      color: "#FFFF",
     },
     button: {
       fontFamily: "SF Pro Rounded",
