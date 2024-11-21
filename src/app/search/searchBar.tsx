@@ -13,9 +13,6 @@ const SearchBar = ({
 
   return (
     <div>
-      {/* Debugging Section */}
-      <h4>Search Debug:</h4>
-      <p>Current Query: {value}</p>
 
       {/* TextField */}
       <TextField
