@@ -140,6 +140,39 @@ const Library = () => {
                 >
                   {card.text}
                 </Typography>
+
+                {/* Circle with Arrow */}
+                <Box
+                  sx={{
+                    width: "40px",
+                    height: "40px",
+                    bgcolor: "white",
+                    borderRadius: "50%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    position: "absolute",
+                    bottom: "25px",
+                    right: "35px",
+                    cursor: "pointer",
+                    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+                    ":hover": {
+                      bgcolor: "#f0f0f0",
+                    },
+                  }}
+                  onClick={() => console.log(`Arrow clicked for card: ${card.text}`)}
+                >
+                  <Typography
+                    component="span"
+                    sx={{
+                      fontSize: "1.2rem",
+                      fontWeight: "bold",
+                      color: "#000",
+                    }}
+                  >
+                    →
+                  </Typography>
+                </Box>
               </CardContent>
             </Card>
           ))
