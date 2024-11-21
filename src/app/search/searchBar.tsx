@@ -1,41 +1,61 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import { TextField, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
-const SearchBar = () => {
+const SearchBar = ({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+}) => {
+  console.log("Current Search Query (Prop):", value); // Debugging log
+
   return (
-    <TextField
-      placeholder="Search"
-      variant="outlined"
-      sx={{
-        width: "100%",
-        maxWidth: "600px", // Limits the width to make it responsive
-        margin: "20px auto",
-        bgcolor: "#fff",
-        borderRadius: "25px",
-        boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.2)", // Adds subtle shadow
-        "& .MuiOutlinedInput-root": {
+    <div>
+      {/* Debugging Section */}
+      <h4>Search Debug:</h4>
+      <p>Current Query: {value}</p>
+
+      {/* TextField */}
+      <TextField
+        value={value}
+        onChange={(e) => {
+          console.log("Input Value Changed:", e.target.value);
+          onChange(e); // Pass the event to the parent
+        }}
+        placeholder="Search"
+        variant="outlined"
+        sx={{
+          width: "100%",
+          maxWidth: "600px",
+          margin: "20px auto",
+          bgcolor: "#fff",
           borderRadius: "25px",
-          padding: "5px 15px", // Ensures proper padding inside the input
-          "& fieldset": {
-            borderColor: "transparent", // Removes border
+          boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.2)",
+          "& .MuiOutlinedInput-root": {
+            borderRadius: "25px",
+            padding: "5px 15px",
+            "& fieldset": {
+              borderColor: "transparent",
+            },
+            "&:hover fieldset": {
+              borderColor: "#ccc",
+            },
+            "&.Mui-focused fieldset": {
+              borderColor: "#1565c0",
+            },
           },
-          "&:hover fieldset": {
-            borderColor: "#ccc", // Adds hover effect
-          },
-          "&.Mui-focused fieldset": {
-            borderColor: "#1565c0", // Changes border color when focused
-          },
-        },
-      }}
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">
-            <SearchIcon sx={{ color: "#999" }} />
-          </InputAdornment>
-        ),
-      }}
-    />
+        }}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon sx={{ color: "#999" }} />
+            </InputAdornment>
+          ),
+        }}
+      />
+    </div>
   );
 };
 

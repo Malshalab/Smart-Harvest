@@ -1,11 +1,12 @@
 import Navbar from "@/components/navbar";
 import "@fontsource/roboto/400.css";
-import SearchBar from "@/app/search/searchBar";
 import Library from "@/pages/library";
 import { metadata } from "@/app/configs/homeConfigs";
 import { Box, Typography } from "@mui/material";
 
 export default function Home() {
+  console.log("Home Component Rendered"); // Debug Home rendering
+
   return (
     <Box
       sx={{
@@ -13,7 +14,7 @@ export default function Home() {
         flexDirection: "column",
         alignItems: "center",
         textAlign: "center",
-        gap: 2
+        gap: 2,
       }}
     >
       <Navbar />
@@ -32,17 +33,26 @@ export default function Home() {
       >
         <Typography
           variant="h1"
-          sx={{ fontWeight: "semi-bold", fontSize: "7rem", mb: 2, lineHeight: 1.2 }}
+          sx={{
+            fontWeight: "semi-bold",
+            fontSize: "7rem",
+            mb: 2,
+            lineHeight: 1.2,
+          }}
         >
           {metadata.description}
         </Typography>
         <Typography
           variant="body1"
-          sx={{ fontWeight: "semi-bold", fontSize: "1.75rem", color: "#757575", marginBottom: 4 }}
+          sx={{
+            fontWeight: "semi-bold",
+            fontSize: "1.75rem",
+            color: "#757575",
+            marginBottom: 4,
+          }}
         >
           {metadata.directions}
         </Typography>
-        <SearchBar />
       </Box>
       <Library />
     </Box>
