@@ -4,141 +4,86 @@ import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-
-const theme = createTheme({
-  typography: {
-    fontFamily: "SF Pro, SF Pro Display, SF Pro Text, Arial, sans-serif",
-    h1: {
-      fontFamily: "SF Pro Display",
-      fontSize: "2.5rem",
-      fontWeight: 400, // Regular weight for hero text
-    },
-    h6: {
-      fontFamily: "SF Pro Display",
-      fontSize: "1.25rem",
-      fontWeight: 400,
-      color: "#555", // Subtle gray for subtitles
-    },
-    body1: {
-      fontFamily: "SF Pro Text",
-      fontSize: "1rem",
-      fontWeight: 400,
-    },
-    button: {
-      fontFamily: "SF Pro Rounded",
-      fontSize: "0.875rem",
-      textTransform: "uppercase",
-    },
-  },
-});
 
 const Navbar = () => {
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      {/* Navbar */}
-      <AppBar
-        position="static"
-        sx={{
-          bgcolor: "white", // White background
-          color: "black", // Black text
-          boxShadow: "none", // Remove shadow for a clean look
-        }}
-      >
-        <Container>
-          <Toolbar
-            disableGutters
+    <AppBar
+      position="sticky"
+      sx={{
+        bgcolor: "white",
+        color: "black",
+        boxShadow: "none",
+        borderBottom: "1px solid #E0E0E0",
+      }}
+    >
+      <Container>
+        <Toolbar
+          disableGutters
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          {/* Left Section */}
+          <Box sx={{ display: "flex", gap: 2 }}>
+            <Button sx={{ textTransform: "none", color: "black" }}>Invest</Button>
+            <Button sx={{ textTransform: "none", color: "black" }}>About</Button>
+            <Button sx={{ textTransform: "none", color: "black" }}>Pricing</Button>
+            <Button sx={{ textTransform: "none", color: "black" }}>Events</Button>
+          </Box>
+
+          {/* Logo */}
+          <Typography
+            variant="h6"
             sx={{
-              display: "flex",
-              justifyContent: "space-between", // Spacing between left, center, and right sections
-              alignItems: "center",
+              fontWeight: "bold",
+              letterSpacing: "0.1rem",
+              textAlign: "center",
             }}
           >
-            {/* Left Section */}
-            <Box
-              sx={{
-                display: "flex",
-                gap: 4, // Even spacing between items
-              }}
-            >
-              <Typography variant="h6" component="div">
-                Invest
-              </Typography>
-              <Typography variant="h6" component="div">
-                About
-              </Typography>
-              <Typography variant="h6" component="div">
-                Pricing
-              </Typography>
-              <Typography variant="h6" component="div">
-                Events
-              </Typography>
-            </Box>
-
-            {/* Center Section (Logo) */}
-            <Typography
-              variant="h6"
-              noWrap
-              component="a"
-              href="#"
-              sx={{
-                fontFamily: "SF Pro Display, Arial, sans-serif",
-                fontWeight: 700,
-                letterSpacing: ".3rem",
-                textAlign: "center",
-                color: "inherit",
-                textDecoration: "none",
-              }}
-            >
-              SmartHarvest
-            </Typography>
-
-            {/* Right Section */}
-            <Box
-              sx={{
-                display: "flex",
-                gap: 4, // Even spacing between items
-              }}
-            >
-              <Typography variant="h6" component="div">
-                FAQ
-              </Typography>
-              <Typography variant="h6" component="div">
-                Contact
-              </Typography>
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
-
-      {/* Hero Section */}
-      <Container
-        maxWidth="md"
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center",
-          padding: 4,
-        }}
-      >
-        <Box>
-          <Typography variant="h1" gutterBottom>
-            Event Registration
+            SmartHarvest
           </Typography>
-          <Typography variant="h6" gutterBottom>
-            Explore and Register Below <br/> 
-            For Webinars, Workshops, and Sustainability Events.
-          </Typography>
-        </Box>
+
+          {/* Right Section */}
+          <Box sx={{ display: "flex", gap: 2 }}>
+            <Button sx={{ textTransform: "none", color: "black" }}>Log in</Button>
+            <Button
+              variant="contained"
+              sx={{
+                textTransform: "none",
+                bgcolor: "black",
+                color: "white",
+                borderRadius: 20,
+                ":hover": { bgcolor: "#333" },
+              }}
+            >
+              Sign up
+            </Button>
+          </Box>
+        </Toolbar>
       </Container>
-    </ThemeProvider>
+    </AppBar>
   );
 };
 
-export default Navbar;
+const EventRegistrationPage = () => {
+  return (
+    <Box display="flex" flexDirection="column" alignItems="center" padding={4}>
+      <Navbar />
+      {/* Event Registration Page Title */}
+      <Typography variant="h4" sx={{ fontWeight: "bold", marginTop: 3 }}>
+        Event Registration
+      </Typography>
+      <Typography sx={{ marginTop: 2}}>
+        Explore and register for events below.
+      </Typography>
+      {/* Additional event registration content goes here */}
+    </Box>
+  );
+};
+
+export default EventRegistrationPage;
