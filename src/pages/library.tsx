@@ -21,7 +21,6 @@ const Library = () => {
         onChange={(e) => {
           setSearchQuery(e.target.value); // Preserve case in input
         }}
-
       />
       <Box
         sx={{
@@ -71,7 +70,11 @@ const Library = () => {
       >
         {filteredCards.length > 0 ? (
           filteredCards.map((card) => (
-            <Button key={card.title}>
+            <Button 
+              key={card.title}
+              href={card.resourceLocation}
+              target="_blank"        
+            >
               <Card
                 key={card.title}
                 sx={{
@@ -91,7 +94,7 @@ const Library = () => {
                 }}
               >
                 <CardCover>
-                  {card.type !== contentType.videos && card.thumbnail}
+                  {card.thumbnail}
                 </CardCover>
                 <CardContent
                   sx={{
@@ -102,7 +105,7 @@ const Library = () => {
                     padding: "1.5rem",
                     position: "relative",
                     zIndex: 2,
-                    backgroundColor: "rgba(0, 0, 0, 0.5)",
+                    backgroundColor: "rgba(0, 0, 0, 0.2)",
                   }}
                 >
                   <Typography
