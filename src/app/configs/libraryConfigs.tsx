@@ -8,9 +8,7 @@ import framingOfSustainableAgriImage from '../assets/images/thumbnails/articles/
 import decadesMatterImage from '../assets/images/thumbnails/articles/decades-matter-agricultural-diversification-increases-financial-profitability-biodiversity-and-ecosystem-services-over-time.jpeg';
 import carbonEconomicsImage from '../assets/images/thumbnails/articles/carbon-economics-of-different-agricultural-practices-for-farming-soil.jpeg';
 
-import bonsucroImage from '../assets/images/thumbnails/certifications/bonsucro.jpeg';
 import sanImage from '../assets/images/thumbnails/certifications/san.jpeg';
-import leafImage from '../assets/images/thumbnails/certifications/leaf.jpeg';
 import usdaImage from '../assets/images/thumbnails/certifications/usda.jpeg';
 import ISO14001Image from '../assets/images/thumbnails/certifications/ISO14001.jpeg';
 
@@ -51,9 +49,7 @@ const imageMap = {
   framingOfSustainableAgri: framingOfSustainableAgriImage,
   decadesMatter: decadesMatterImage,
   carbonEconomics: carbonEconomicsImage,
-  bonsucro: bonsucroImage,
   san: sanImage,
-  leafImage: leafImage,
   usda: usdaImage,
   ISO14001: ISO14001Image,
 };
@@ -156,21 +152,9 @@ const tabContent: tabContentType = {
     [tabName.certification]: [
       {
         type: contentType.external,
-        thumbnail: <Image src={imageMap.bonsucro} alt={'bonsucro'} />,
-        title: 'LEAF Marque Certification',
-        resourceLocation: 'https://leaf.eco/leafmarque/about',
-      },
-      {
-        type: contentType.external,
         thumbnail: <Image src={imageMap.san} alt={'san'} />,
         title: 'ISO 14001 Environmental Management',
         resourceLocation: 'https://www.iso.org/standards/popular/iso-14000-family',
-      },
-      {
-        type: contentType.external,
-        thumbnail: <Image src={imageMap.leafImage} alt={'leafImage'} />,
-        title: 'Bonsucro Certification',
-        resourceLocation: 'https://www.fairtrade.net/en/why-fairtrade/how-we-do-it/fairtrade-standards.html',
       },
       {
         type: contentType.external,
