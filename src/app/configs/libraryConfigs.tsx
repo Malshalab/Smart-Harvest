@@ -1,12 +1,12 @@
 import Image from "next/image";
 
 import understandingSustainabilityImage from '../assets/images/thumbnails/articles/understanding-the-potential-of-sustainability-turn-in-farming-review-of-sociotechnical-adoption-factors-of-agri-environmental-cropping-practices.jpeg';
-import transitioningToSustainableAgriImage from '../assets/images/thumbnails/articles/transitioning-to-sustainable-agriculture-requires-growing-and-sustaining-an-ecologically-skilled-workforce.jpg';
+import transitioningToSustainableAgriImage from '../assets/images/thumbnails/articles/transitioning-to-sustainable-agriculture-requires-growing-and-sustaining-an-ecologically-skilled-workforce.jpeg';
 import sustainableFarmingPracticesImage from '../assets/images/thumbnails/articles/sustainable-farming-practices-and-soil-health.jpeg';
-import plasmaAgricultureImage from '../assets/images/thumbnails/articles/plasma-agriculture-a-green-technology-to-attain-the-sustainable-agriculture-goal.jpg';
-import framingOfSustainableAgriImage from '../assets/images/thumbnails/articles/framing-of-sustainable-agricultural-practices-by-the-farming-press-and-its-effect-on-adoption.jpg';
-import decadesMatterImage from '../assets/images/thumbnails/articles/decades-matter-agricultural-diversification-increases-financial-profitability-biodiversity-and-ecosystem-services-over-time.jpg';
-import carbonEconomicsImage from '../assets/images/thumbnails/articles/carbon-economics-of-different-agricultural-practices-for-farming-soil.jpg';
+import plasmaAgricultureImage from '../assets/images/thumbnails/articles/plasma-agriculture-a-green-technology-to-attain-the-sustainable-agriculture-goal.jpeg';
+import framingOfSustainableAgriImage from '../assets/images/thumbnails/articles/framing-of-sustainable-agricultural-practices-by-the-farming-press-and-its-effect-on-adoption.jpeg';
+import decadesMatterImage from '../assets/images/thumbnails/articles/decades-matter-agricultural-diversification-increases-financial-profitability-biodiversity-and-ecosystem-services-over-time.jpeg';
+import carbonEconomicsImage from '../assets/images/thumbnails/articles/carbon-economics-of-different-agricultural-practices-for-farming-soil.jpeg';
 
 import bonsucroImage from '../assets/images/thumbnails/certifications/bonsucro.jpeg';
 import sanImage from '../assets/images/thumbnails/certifications/san.jpeg';
@@ -29,7 +29,7 @@ enum tabName {
     certification = 'Certification',
 }
 
-interface contentMetaData {
+export interface contentMetaData {
   type: contentType;
   thumbnail: JSX.Element;
   title: string;
@@ -64,43 +64,43 @@ const tabContent: tabContentType = {
         type: contentType.document,
         thumbnail: <Image src={imageMap.understandingSustainability} alt={'understandingSustainability'} />,
         title: 'Sustainability in Farming Practices',
-        resourceLocation: '',
+        resourceLocation: '/assets/documents/Understanding the potential of sustainability turn in farming- review of sociotechnical adoption factors of agri-environmental cropping practices.pdf',
       },
       {
         type: contentType.document,
         thumbnail: <Image src={imageMap.transitioningToSustainableAgri} alt={'transitioningToSustainableAgri'} />,
         title: 'Transition to Sustainable Farming',
-        resourceLocation: '',
+        resourceLocation: '/assets/documents/Transitioning to Sustainable Agriculture Requires Growing and Sustaining an Ecologically Skilled Workforce.pdf',
       },
       {
         type: contentType.document,
         thumbnail: <Image src={imageMap.sustainableFarmingPractices} alt={'sustainableFarmingPractices'} />,
         title: 'Soil Health & Sustainable Farming',
-        resourceLocation: '',
+        resourceLocation: '/assets/documents/Sustainable farming practices and soil health.pdf',
       },
       {
         type: contentType.document,
         thumbnail: <Image src={imageMap.plasmaAgriculture} alt={'plasmaAgriculture'} />,
         title: 'Plasma Agriculture Technology',
-        resourceLocation: '',
+        resourceLocation: '/assets/documents/Plasma Agriculture- A green technology to attain the sustainable agriculture goal.pdf',
       },
       {
         type: contentType.document,
         thumbnail: <Image src={imageMap.framingOfSustainableAgri} alt={'framingOfSustainableAgri'} />,
         title: 'Framing Sustainable Practices',
-        resourceLocation: '',
+        resourceLocation: '/assets/documents/Framing of sustainable agricultural practices by the farming press and its effect on adoption.pdf',
       },
       {
         type: contentType.document,
         thumbnail: <Image src={imageMap.decadesMatter} alt={'decadesMatter'} />,
         title: 'Decades Matter in Agriculture',
-        resourceLocation: '',
+        resourceLocation: '/assets/documents/Decades matter- Agricultural diversification increases financial profitability, biodiversity, and ecosystem services over time.pdf',
       },
       {
         type: contentType.document,
         thumbnail: <Image src={imageMap.carbonEconomics} alt={'carbonEconomics'} />,
         title: 'Carbon Economics in Farming',
-        resourceLocation: '',
+        resourceLocation: '/assets/documents/Carbon Economics of Different Agricultural Practices for Farming Soil.pdf',
       },
     ],
     [tabName.tutorials]: [
@@ -115,46 +115,42 @@ const tabContent: tabContentType = {
       {
         type: contentType.videos,
         thumbnail:(
-          <iframe
-            src="https://www.youtube.com/embed/65ngjdTslYY?controls=0&autoplay=1&mute=1"
-            allow="autoplay; encrypted-media; picture-in-picture"
-          />
+          <video loop muted autoPlay>
+            <source src="/assets/videos/eightHoursRobot.mp4" type="video/mp4" />
+          </video>
         ),
         title: '8 Hours of Robots Harvesting Strawberries and Tomatoes in 4K',
-        resourceLocation: 'https://www.youtube.com/watch?v=65ngjdTslYY',
+        resourceLocation: 'https://www.youtube.com/embed/65ngjdTslYY',
       },
       {
         type: contentType.videos,
         thumbnail: (
-          <iframe
-            src="https://www.youtube.com/embed/ol76iSC06bY?controls=0&autoplay=1&mute=1"
-            allow="autoplay; encrypted-media; picture-in-picture"
-          />
+          <video loop muted autoPlay>
+            <source src="/assets/videos/smartFarming.mp4" type="video/mp4" />
+          </video>
         ),
         title: 'Smart Farm: Modern Methods For Harvesting, Sorting And Processing',
-        resourceLocation: 'https://www.youtube.com/watch?v=ol76iSC06bY',
+        resourceLocation: 'https://www.youtube.com/embed/ol76iSC06bY',
       },
       {
         type: contentType.videos,
         thumbnail: (
-          <iframe
-            src="https://www.youtube.com/embed/LCA0VX2jzX0?controls=0&autoplay=1&mute=1"
-            allow="autoplay; encrypted-media; picture-in-picture"
-          />
+          <video loop muted autoPlay>
+            <source src="/assets/videos/harvestPecans.mp4" type="video/mp4" />
+          </video>
         ),
         title: 'How Farmers Harvest Millions of Pecans',
-        resourceLocation: 'https://www.youtube.com/watch?v=LCA0VX2jzX0',
+        resourceLocation: 'https://www.youtube.com/embed/LCA0VX2jzX0',
       },
       {
         type: contentType.videos,
         thumbnail: (
-          <iframe
-            src="https://www.youtube.com/embed/wwH76bhCqh8?controls=0&autoplay=1&mute=1"
-            allow="autoplay; encrypted-media; picture-in-picture"
-          />
+          <video loop muted autoPlay>
+            <source src="/assets/videos/smartHarvesting.mp4" type="video/mp4" />
+          </video>
         ),
         title: 'The Future Of Farming: Smart Solutions For Efficient Harvesting And Processing',
-        resourceLocation: 'https://www.youtube.com/watch?v=wwH76bhCqh8',
+        resourceLocation: 'https://www.youtube.com/embed/wwH76bhCqh8',
       },
     ],
     [tabName.certification]: [
