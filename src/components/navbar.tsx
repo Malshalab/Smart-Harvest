@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
+import Link from "next/link"; 
 
 const Navbar = () => {
   return (
@@ -30,9 +31,15 @@ const Navbar = () => {
         >
           {/* Left Section */}
           <Box sx={{ display: "flex", gap: 2 }}>
-            <Button sx={{ textTransform: "none", color: "black" }}>Invest</Button>
+            <Link href="/library">
+              <Button sx={{ textTransform: "none", color: "black" }}>Home</Button>
+            </Link>
             <Button sx={{ textTransform: "none", color: "black" }}>About</Button>
-            <Button sx={{ textTransform: "none", color: "black" }}>Pricing</Button>
+            <Link href="/events" passHref>
+              <Button sx={{ textTransform: "none", color: "black" }}>
+                Events
+              </Button>
+            </Link>
           </Box>
 
           {/* Logo */}
