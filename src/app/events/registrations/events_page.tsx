@@ -124,6 +124,21 @@ const Library: React.FC = () => {
                 {event.description}
               </TypographyJoy>
 
+              {/* Event Date and Time */}
+              <TypographyJoy
+                level="body-sm"
+                textColor="#555"
+                sx={{
+                  fontFamily: "SF Pro Display, Arial, sans-serif",
+                  fontWeight: "400",
+                  position: "absolute",
+                  top: 130,
+                  left: 10,
+                }}
+              >
+                Event Date & Time: {new Date(event.event_date).toLocaleString()}
+              </TypographyJoy>
+
               {/* Button at the Bottom */}
               <Box sx={{ display: "flex", justifyContent: "center", marginTop: "auto" }}>
                 <Button

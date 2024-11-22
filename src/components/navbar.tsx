@@ -74,6 +74,9 @@ const Navbar = () => {
               <Typography variant="h6" component="div">
                 Pricing
               </Typography>
+              <Typography variant="h6" component="div">
+                Events
+              </Typography>
             </Box>
 
             {/* Center Section (Logo) */}
@@ -126,7 +129,7 @@ const Navbar = () => {
       >
         <Box>
           <Typography variant="h1" gutterBottom>
-            Learn More About Sustainability Through Our Events Hosted by Our Subject Matter Experts
+            Event Registration
           </Typography>
           <Typography variant="h6" gutterBottom>
             Explore and Register Below <br/> 

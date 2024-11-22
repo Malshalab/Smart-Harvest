@@ -9,7 +9,7 @@ const supabase = await supabaseLocals();
 // Table alias for event registration
 const eventRegistrationTableAlias = '10_event_registration';
 const userProfileTableAlias = '02_user_profile';
-const eventsTableAlias = '09_events'
+const eventsTableAlias = '09_events';
 
 // Register user for event
 export async function registerUserToEvent(eventId: number): Promise<string> { // Return a string message
@@ -49,19 +49,30 @@ export async function registerUserToEvent(eventId: number): Promise<string> { //
             .single();
 
         if (existingRegistration) {
-            // If user is already registered for the same event, return an error message
             console.error("User is already registered for this event.");
             return "You are already registered for this event.";
         }
 
-        // Step 3: Insert the registration record into the `event_registration` table with current timestamp for registration_date
+        // Step 3: Retrieve event details (including the event date and time)
+        const { data: eventData, error: eventError } = await supabase
+            .from(eventsTableAlias)
+            .select("event_name, event_date")
+            .eq("event_id", eventId)
+            .single();
+
+        if (eventError || !eventData) {
+            console.error("Error fetching event details:", eventError);
+            throw new Error("Unable to retrieve event details.");
+        }
+
+        // Step 4: Insert the registration record into the `event_registration` table
         const { data: registrationData, error: registrationError } = await supabase
             .from(eventRegistrationTableAlias)
             .insert([
                 {
                     user_id: userId,
                     event_id: eventId,
-                    registration_date: new Date().toISOString(),  // Add current timestamp for registration_date
+                    registration_date: new Date().toISOString(),
                 },
             ])
             .select();
@@ -72,7 +83,11 @@ export async function registerUserToEvent(eventId: number): Promise<string> { //
         }
 
         console.log("Registration successful:", registrationData);
-        return "Registration successful!"; // Return success message
+
+        // Format the event date and time
+        const eventDateTime = new Date(eventData.event_date).toLocaleString();
+
+        return `Registration successful for event: ${eventData.event_name} on ${eventDateTime}`;
     } catch (error) {
         console.error("An error occurred during event registration:", error);
         return "An error occurred during registration.";
