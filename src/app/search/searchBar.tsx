@@ -9,50 +9,46 @@ const SearchBar = ({
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }) => {
-  console.log("Current Search Query (Prop):", value); // Debugging log
+  console.log("Current Search Query (Prop):", value);
 
   return (
-    <div>
-
-      {/* TextField */}
-      <TextField
-        value={value}
-        onChange={(e) => {
-          console.log("Input Value Changed:", e.target.value);
-          onChange(e); // Pass the event to the parent
-        }}
-        placeholder="Search"
-        variant="outlined"
-        sx={{
-          width: "100%",
-          maxWidth: "600px",
-          margin: "20px auto",
-          bgcolor: "#fff",
+    <TextField
+      value={value}
+      onChange={(e) => {
+        console.log("Input Value Changed:", e.target.value);
+        onChange(e);
+      }}
+      placeholder="Search"
+      variant="outlined"
+      sx={{
+        width: "100%",
+        maxWidth: "600px",
+        margin: "20px auto",
+        bgcolor: "#fff",
+        borderRadius: 40,
+        borderWidth: "2px",
+        "& .MuiOutlinedInput-root": {
           borderRadius: "25px",
-          boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.2)",
-          "& .MuiOutlinedInput-root": {
-            borderRadius: "25px",
-            padding: "5px 15px",
-            "& fieldset": {
-              borderColor: "transparent",
-            },
-            "&:hover fieldset": {
-              borderColor: "#ccc",
-            },
-            "&.Mui-focused fieldset": {
-              borderColor: "#1565c0",
-            },
+          padding: "5px 15px",
+          "& fieldset": {
+            borderColor: "grey",
           },
-        }}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon sx={{ color: "#999" }} />
-            </InputAdornment>
-          ),
-        }}
-      />
-    </div>
+          "&:hover fieldset": {
+            borderColor: "#1565c0",
+          },
+          "&.Mui-focused fieldset": {
+            borderColor: "black",
+          },
+        },
+      }}
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            <SearchIcon sx={{ color: "#999" }} />
+          </InputAdornment>
+        ),
+      }}
+    />
   );
 };
 

@@ -5,8 +5,6 @@ import { metadata } from "@/app/configs/homeConfigs";
 import { Box, Typography } from "@mui/material";
 
 export default function Home() {
-  console.log("Home Component Rendered"); // Debug Home rendering
-
   return (
     <Box
       sx={{
@@ -18,7 +16,6 @@ export default function Home() {
       }}
     >
       <Navbar />
-      {/* Hero Section */}
       <Box
         sx={{
           display: "flex",
@@ -35,7 +32,7 @@ export default function Home() {
           variant="h1"
           sx={{
             fontWeight: "semi-bold",
-            fontSize: "7rem",
+            fontSize: "625%",
             mb: 2,
             lineHeight: 1.2,
           }}

@@ -1,50 +1,28 @@
 "use client";
 import React, { useState } from "react";
 import { Box, Button, Card, CardContent, Typography } from "@mui/material";
-import { cards, tabContent, tabName } from "@/app/configs/libraryConfigs";
-import { CardCover } from "@mui/joy";
+import { contentType, tabContent, tabName } from "@/app/configs/libraryConfigs";
 import SearchBar from "@/app/search/searchBar";
+import { CardCover } from "@mui/joy";
 
 const Library = () => {
-  console.log("Library Component Rendered");
+  const [selectedTab, setSelectedTab] = useState<tabName>(tabName.articles);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const [selectedTabs, setSelectedTabs] = useState<tabName[]>([]); // Track selected tabs
-  const [searchQuery, setSearchQuery] = useState(""); // Track search input
-
-  // Toggle tab selection
-  const toggleTab = (tab: tabName) => {
-    setSelectedTabs((prev) =>
-      prev.includes(tab) ? prev.filter((t) => t !== tab) : [...prev, tab]
-    );
-  };
-
-  // Filter cards based on selected tabs and search query
-  const filteredCards = cards.filter((card) => {
-    const query = searchQuery.toLowerCase();
-    const matchesSearch = card.title.toLowerCase().includes(query);
-    const matchesTab =
-      selectedTabs.length === 0 || // If no tabs selected, show all
-      selectedTabs.some((tab) =>
-        card.tags.includes(tab.toLowerCase()) // Match tabs with card tags
-      );
-    return matchesSearch && matchesTab;
-  });
-
-  console.log("Filtered Cards:", filteredCards); // Debugging filtered results
-  console.log("Selected Tabs:", selectedTabs); // Debugging selected tabs
+  // Get the filtered cards for the selected tab
+  const filteredCards = tabContent[selectedTab].filter((card) =>
+    card.title.toLowerCase().includes(searchQuery.toLowerCase()) // Perform case-insensitive search
+  );
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", padding: "10px" }}>
-      {/* Search Bar */}
       <SearchBar
         value={searchQuery}
         onChange={(e) => {
-          console.log("Search Query Updated in Library:", e.target.value); // Debugging in parent
-          setSearchQuery(e.target.value); // Update the state
+          setSearchQuery(e.target.value); // Preserve case in input
         }}
-      />
 
-      {/* Buttons */}
+      />
       <Box
         sx={{
           display: "flex",
@@ -52,25 +30,28 @@ const Library = () => {
           justifyContent: "center",
           flexWrap: "wrap",
           gap: 2,
+          marginTop: "20px",
         }}
       >
         {Object.keys(tabContent).map((key) => (
           <Button
             key={key}
-            variant={selectedTabs.includes(key as tabName) ? "contained" : "outlined"}
-            onClick={() => toggleTab(key as tabName)} // Toggle selection
+            variant={selectedTab == key as tabName ? "contained" : "outlined"}
+            onClick={() => setSelectedTab(key as tabName)} // Toggle selection
             sx={{
               padding: "10px 20px",
               borderColor: "#E7E7E7",
               borderRadius: "10px",
               fontSize: "1.5rem",
               fontFamily: "Roboto",
-              color: selectedTabs.includes(key as tabName) ? "#FFF" : "#000",
-              backgroundColor: selectedTabs.includes(key as tabName) ? "#000" : "#E7E7E7",
+              color: selectedTab == key as tabName ? "#FFF" : "#000",
+              backgroundColor:
+                selectedTab == key as tabName ? "#000" : "#E7E7E7",
               transition: "all 0.3s ease",
               "&:hover": {
-                backgroundColor: selectedTabs.includes(key as tabName) ? "#000" : "#a6a6a6",
-                color: selectedTabs.includes(key as tabName) ? "#FFF" : "#000",
+                backgroundColor:
+                  selectedTab == key as tabName ? "#000" : "#a6a6a6",
+                color: selectedTab == key as tabName ? "#FFF" : "#000",
               },
             }}
           >
@@ -78,114 +59,84 @@ const Library = () => {
           </Button>
         ))}
       </Box>
-
-      {/* Cards */}
       <Box
         sx={{
           display: "flex",
           flexWrap: "wrap",
-          gap: 2,
+          gap: 3,
           justifyContent: "center",
           padding: 2,
+          marginTop: "20px",
         }}
       >
         {filteredCards.length > 0 ? (
-          filteredCards.map((card, index) => (
-            <Card
-              key={index}
-              sx={{
-                flex: "1 1 calc(33.33% - 16px)",
-                maxWidth: "400px",
-                minWidth: "200px",
-                height: "auto",
-                aspectRatio: "4 / 3",
-                borderRadius: 20,
-                transition: "transform 0.3s ease, box-shadow 0.3s ease",
-                ":hover": {
-                  transform: "scale(1.05)",
-                  boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.2)",
-                },
-                position: "relative",
-                overflow: "hidden",
-              }}
-            >
-              <CardCover>
-                {card.type === "video" ? (
-                  <video autoPlay loop muted>
-                    <source src={card.src} type="video/mp4" />
-                  </video>
-                ) : (
-                  <img src={card.src} alt={card.text} loading="lazy" />
-                )}
-              </CardCover>
-              <CardContent
+          filteredCards.map((card) => (
+            <Button key={card.title}>
+              <Card
+                key={card.title}
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "flex-end",
-                  height: "100%",
-                  padding: "1.5rem",
+                  flex: "1 1 calc(33.33% - 16px)",
+                  maxWidth: "400px",
+                  minWidth: "200px",
+                  height: "500px",
+                  aspectRatio: "4 / 3",
+                  borderRadius: 7,
+                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                  ":hover": {
+                    transform: "scale(1.05)",
+                    boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.2)",
+                  },
                   position: "relative",
-                  zIndex: 2,
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
+                  overflow: "hidden",
                 }}
               >
-                <Typography
-                  variant="h6"
+                <CardCover>
+                  {card.type !== contentType.videos && card.thumbnail}
+                </CardCover>
+                <CardContent
                   sx={{
-                    color: "#fff",
-                    fontFamily: "SF Pro Display, Arial, sans-serif",
-                    fontWeight: "600",
-                  }}
-                >
-                  {card.text}
-                </Typography>
-
-                {/* Circle with Arrow */}
-                <Box
-                  sx={{
-                    width: "40px",
-                    height: "40px",
-                    bgcolor: "white",
-                    borderRadius: "50%",
                     display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    position: "absolute",
-                    bottom: "25px",
-                    right: "35px",
-                    cursor: "pointer",
-                    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
-                    ":hover": {
-                      bgcolor: "#f0f0f0",
-                    },
+                    flexDirection: "column",
+                    justifyContent: "flex-end",
+                    height: "100%",
+                    padding: "1.5rem",
+                    position: "relative",
+                    zIndex: 2,
+                    backgroundColor: "rgba(0, 0, 0, 0.5)",
                   }}
-                  onClick={() => console.log(`Arrow clicked for card: ${card.text}`)}
                 >
                   <Typography
-                    component="span"
+                    variant="h5"
                     sx={{
-                      fontSize: "1.2rem",
-                      fontWeight: "bold",
-                      color: "#000",
+                      color: "#fff",
+                      fontFamily: "'Roboto', Arial, sans-serif",
+                      fontWeight: "100",
+                      textAlign: "center",
+                      textShadow: "2px 2px 4px rgba(0, 0, 0, 0.8)",
+                      padding: "0.5rem",
+                      backgroundColor: "rgba(0, 0, 0, 0.6)",
+                      borderRadius: "8px",
+                      width: "100%",
+                      alignSelf: "center",
                     }}
                   >
-                    →
+                    {card.title}
                   </Typography>
-                </Box>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </Button>
           ))
         ) : (
           <Typography
-            variant="h6"
             sx={{
-              textAlign: "center",
+              fontFamily: "Roboto",
+              fontSize: "1.5rem",
+              color: "#666",
               marginTop: "20px",
-              color: "#757575",
+              textAlign: "center",
             }}
           >
-            No cards match the selected criteria.
+            No cards found.
           </Typography>
         )}
       </Box>

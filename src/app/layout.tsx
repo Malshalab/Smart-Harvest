@@ -11,7 +11,6 @@ export default function RootLayout({
       <body>
         <ThemeProviderWrapper>
           <NavbarProvider>
-            {/* Application Layout */}
             {children}
           </NavbarProvider>
         </ThemeProviderWrapper>
