@@ -19,6 +19,7 @@ const JsonDisplay = ({ jsonData }:any) => {
         justifyContent: 'center',
         alignItems: 'flex-start',
         width: '100%',
+        height:'100%',
         padding: '16px',
         border: '1px solid #d3d3d3',
         borderRadius: '8px',
@@ -27,22 +28,24 @@ const JsonDisplay = ({ jsonData }:any) => {
         userSelect: 'text',
         }}
     >
-    <Typography variant="h6" sx={{ marginBottom: '8px' }}>
-        Result:
-    </Typography>
+      <Typography variant="h6" sx={{ marginBottom: '8px' }}>
+          Result:
+      </Typography>
 
-        <Box
-        sx={{
-            width: '100%',
-            overflowX: 'auto',
-            backgroundColor: '#f5f5f5',
-            borderRadius: '4px',
-        }}
-        >
-            <SyntaxHighlighter language="json" style={docco}>
-            {jsonString}
-            </SyntaxHighlighter>
-        </Box>
+      <Box
+      sx={{
+          width: '100%',
+          height:'100vh',
+          flex:1,
+          overflowX: 'auto',
+          overflowY: 'auto',
+          backgroundColor: '#f5f5f5',
+          borderRadius: '4px',
+      }}>
+        <SyntaxHighlighter language="json" style={docco}>
+        {jsonString}
+        </SyntaxHighlighter>
+      </Box>
     </Box>
   );
 };
