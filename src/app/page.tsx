@@ -1,11 +1,11 @@
-import Navbar from "@/components/navbar";
-import "@fontsource/roboto/400.css";
-import Library from "@/pages/library";
-import { metadata } from "@/app/configs/homeConfigs";
-import { Box, Typography } from "@mui/material";
 
-export default function Home() {
+import Library from "../pages/events_page";
+import { cookies } from "next/headers";
+export default async function Home() {
+
+  // const cookieStore = await cookies()
   return (
+
     <Box
       sx={{
         display: "flex",

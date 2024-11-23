@@ -100,11 +100,9 @@ interface Event {
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#000000",
       main: "#000000", 
     },
     secondary: {
-      main: "#000000",
       main: "#000000", 
     },
     text: {
@@ -114,6 +112,7 @@ const theme = createTheme({
     background: {
       default: "#EDF2F7",
       default: "#EDF2F7", 
+
     },
   },
   typography: {
