@@ -50,10 +50,12 @@ function Page(){
         }));
     };
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        console.log('event handler called')
-        setEventName(e.target.value)
-        console.log(`event name changed to ${eventName}`)
-    }
+        const value = e.target.value;
+        console.log('event handler called');
+        console.log(`event name changed to ${value}`);
+        setEventName(value);
+    };
+
     
     const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
