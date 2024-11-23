@@ -7,10 +7,10 @@ const CustomInput = ({...props}) => {
     <TextField
       fullWidth
       variant="outlined"
-      placeholder={props.placeholder}
       value={props.value}
       onChange={props.onChange}
       name={props.name}
+      sx={{height:'100%'}}
     />
   );
 };

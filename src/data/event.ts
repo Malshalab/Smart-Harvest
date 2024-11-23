@@ -8,6 +8,7 @@ export interface event_supabase{
     event_id?:number,           // DB_INIT
     event_name?:string,
     description?:string,
+    document?:File,
     event_date?:string,
     created_at?:string,         // DB_INIT
     created_by?:number          

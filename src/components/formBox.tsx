@@ -6,14 +6,12 @@ const FormBox = ({ children}:any) =>{
         <Box
         sx={{
             display: 'flex',
-            flexDirection: 'column',     
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '150px',              
+            flexDirection: 'row',     
+            height: '50vh',              
             width: '100%',
             border: '2px solid #d3d3d3',   
             borderRadius: '12px',
-            padding: '16px',
+            // padding: '16px',
             boxSizing: 'border-box',
         }}
         >
