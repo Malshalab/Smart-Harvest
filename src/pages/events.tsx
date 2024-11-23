@@ -100,17 +100,17 @@ interface Event {
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#38B2AC", // Replace this with your chosen color
+      main: "#000000", 
     },
     secondary: {
-      main: "#2C7A7B", // Optional: Use a complementary darker shade
+      main: "#000000", 
     },
     text: {
       primary: "#2D3748",
       secondary: "#718096",
     },
     background: {
-      default: "#EDF2F7", // Light gray background
+      default: "#EDF2F7", 
     },
   },
   typography: {
