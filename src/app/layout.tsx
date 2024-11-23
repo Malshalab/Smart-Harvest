@@ -16,5 +16,6 @@ export default function RootLayout({
         </ThemeProviderWrapper>
       </body>
     </html>
+
   );
 }

@@ -67,10 +67,6 @@ const Navbar = () => {
                 ":hover": { bgcolor: "#333" },
               }}
             >
-              Sign up
-            </Button>
-          </Box>
-        </Toolbar>
       </Container>
     </AppBar>
   );
