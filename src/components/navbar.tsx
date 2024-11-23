@@ -31,7 +31,7 @@ const Navbar = () => {
         >
           {/* Left Section */}
           <Box sx={{ display: "flex", gap: 2 }}>
-            <Link href="/library">
+            <Link href="/">
               <Button sx={{ textTransform: "none", color: "black" }}>Home</Button>
             </Link>
             <Button sx={{ textTransform: "none", color: "black" }}>About</Button>
