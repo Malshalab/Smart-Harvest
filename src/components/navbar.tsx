@@ -4,37 +4,10 @@ import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-
-const theme = createTheme({
-  typography: {
-    fontFamily: "SF Pro, SF Pro Display, SF Pro Text, Arial, sans-serif",
-    h1: {
-      fontFamily: "SF Pro Display",
-      fontSize: "2.5rem",
-      fontWeight: 400, // Regular weight for hero text
-    },
-    h6: {
-      fontFamily: "SF Pro Display",
-      fontSize: "1.25rem",
-      fontWeight: 400,
-      color: "#555", // Subtle gray for subtitles
-    },
-    body1: {
-      fontFamily: "SF Pro Text",
-      fontSize: "1rem",
-      fontWeight: 400,
-    },
-    button: {
-      fontFamily: "SF Pro Rounded",
-      fontSize: "0.875rem",
-      textTransform: "uppercase",
-    },
-  },
-});
+import Link from "next/link"; 
 
 const Navbar = () => {
   return (
@@ -90,50 +63,12 @@ const Navbar = () => {
                 ":hover": { bgcolor: "#333" },
               }}
             >
-              SmartHarvest
-            </Typography>
-
-            {/* Right Section */}
-            <Box
-              sx={{
-                display: "flex",
-                gap: 4, // Even spacing between items
-              }}
-            >
-              <Typography variant="h6" component="div">
-                FAQ
-              </Typography>
-              <Typography variant="h6" component="div">
-                Contact
-              </Typography>
-            </Box>
-          </Toolbar>
-        </Container>
-      </AppBar>
-
-      {/* Hero Section */}
-      <Container
-        maxWidth="md"
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center",
-          padding: 4,
-        }}
-      >
-        <Box>
-          <Typography variant="h1" gutterBottom>
-            Learn More About Sustainability Through Our Events Hosted by Our Subject Matter Experts
-          </Typography>
-          <Typography variant="h6" gutterBottom>
-            Explore and Register Below <br/> 
-            For Webinars, Workshops, and Sustainability Events.
-          </Typography>
-        </Box>
+              Sign up
+            </Button>
+          </Box>
+        </Toolbar>
       </Container>
-    </ThemeProvider>
+    </AppBar>
   );
 };
 
