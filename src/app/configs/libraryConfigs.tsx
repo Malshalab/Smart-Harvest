@@ -12,6 +12,19 @@ import sanImage from '../assets/images/thumbnails/certifications/san.jpeg';
 import usdaImage from '../assets/images/thumbnails/certifications/usda.jpeg';
 import ISO14001Image from '../assets/images/thumbnails/certifications/ISO14001.jpeg';
 
+import automatingHarvestingImage from '../assets/images/thumbnails/tutorials/automatingHarvesting.jpeg'; 
+import efficientStorageImage from '../assets/images/thumbnails/tutorials/efficientStorage.jpeg'; 
+import smartWaterImage from '../assets/images/thumbnails/tutorials/smartWater.jpeg'; 
+import predictiveAnalysisImage from '../assets/images/thumbnails/tutorials/predictiveAnalysis.jpeg'; 
+import droneTechnologyImage from '../assets/images/thumbnails/tutorials/droneTechnology.jpeg'; 
+import ioTSensorsImage from '../assets/images/thumbnails/tutorials/ioTSensors.jpeg'; 
+
+import AutomatingHarvestingTutorial from "../assets/webPageContent/AutomatingHarvestingTutorial";
+import DroneTechTutorial from "../assets/webPageContent/DroneTechTutorial";
+import EfficientStorageTutorial from "../assets/webPageContent/EfficientStorageTutorial";
+import IoTSensorsTutorial from "../assets/webPageContent/IoTSensorsTutorial";
+import PredictiveAnalysisTutorial from "../assets/webPageContent/PredictiveAnalysisTutorial";
+import SmartWaterTutorial from "../assets/webPageContent/SmartWaterTutorial";
 
 enum contentType {
   document = 'Document',
@@ -52,7 +65,22 @@ const imageMap = {
   san: sanImage,
   usda: usdaImage,
   ISO14001: ISO14001Image,
+  automatingHarvesting: automatingHarvestingImage,
+  efficientStorage: efficientStorageImage,
+  smartWater: smartWaterImage,
+  predictiveAnalysis: predictiveAnalysisImage,
+  droneTechnology: droneTechnologyImage,
+  ioTSensors: ioTSensorsImage,
 };
+
+const tutorialContentMap = {
+  'automatingHarvestingTutorial': <AutomatingHarvestingTutorial />,
+  'droneTechTutorial': <DroneTechTutorial />,
+  'efficientStorageTutorial': <EfficientStorageTutorial />,
+  'ioTSensorsTutorial': <IoTSensorsTutorial />,
+  'predictiveAnalysisTutorial': <PredictiveAnalysisTutorial />,
+  'smartWaterTutorial': <SmartWaterTutorial />
+}
 
 const tabContent: tabContentType = {
     [tabName.articles]: [
@@ -102,9 +130,39 @@ const tabContent: tabContentType = {
     [tabName.tutorials]: [
       {
         type: contentType.webPage,
-        thumbnail: <></>,
-        title: 'Tutorial 1',
-        resourceLocation: '',
+        thumbnail: <Image src={imageMap.ioTSensors} alt={'ioTSensors'} />,
+        title: 'Using IoT Sensors for Smart Harvest',
+        resourceLocation: 'ioTSensorsTutorial',
+      },
+      {
+        type: contentType.webPage,
+        thumbnail: <Image src={imageMap.droneTechnology} alt={'droneTechnology'} />,
+        title: 'Drone Technology for Crop Monitoring',
+        resourceLocation: 'droneTechTutorial',
+      },
+      {
+        type: contentType.webPage,
+        thumbnail: <Image src={imageMap.automatingHarvesting} alt={'automatingHarvesting'} />,
+        title: 'Automating Harvesting with Robotics',
+        resourceLocation: 'automatingHarvestingTutorial',
+      },
+      {
+        type: contentType.webPage,
+        thumbnail: <Image src={imageMap.efficientStorage} alt={'efficientStorage'} />,
+        title: 'Efficient Storage After Harvesting',
+        resourceLocation: 'efficientStorageTutorial',
+      },
+      {
+        type: contentType.webPage,
+        thumbnail: <Image src={imageMap.smartWater} alt={'smartWater'} />,
+        title: 'Smart Water Management During Harvest',
+        resourceLocation: 'smartWaterTutorial',
+      },
+      {
+        type: contentType.webPage,
+        thumbnail: <Image src={imageMap.predictiveAnalysis} alt={'predictiveAnalysis'} />,
+        title: 'Predictive Analytics for Harvest Scheduling',
+        resourceLocation: 'predictiveAnalysisTutorial',
       },
     ],
     [tabName.videos]: [
@@ -175,4 +233,5 @@ export {
     tabName,
     contentType,
     tabContent,
+    tutorialContentMap,
 };
