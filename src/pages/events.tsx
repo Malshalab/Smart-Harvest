@@ -15,15 +15,74 @@ import {
   MenuItem,
   Snackbar,
   Alert,
+  Tooltip,
+  Paper,
 } from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import RoomIcon from "@mui/icons-material/Room";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import CloseIcon from "@mui/icons-material/Close";
 import Navbar from "@/components/navbar";
-import { getEvents } from "@/api/events/eventsActions"; // Replace with your Supabase query
-import { eventConfigs } from "@/app/configs/eventConfigs"; // Adjust the path based on your project structure
+import { getEvents } from "@/api/events/eventsActions";
+import { eventConfigs } from "@/app/configs/eventConfigs";
+import { styled, keyframes } from "@mui/system";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
+/** Animation Keyframes */
+const fadeInUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const pulse = keyframes`
+  0% {
+    box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.4);
+  }
+  70% {
+      box-shadow: 0 0 0 10px rgba(46, 204, 113, 0);
+  }
+  100% {
+      box-shadow: 0 0 0 0 rgba(46, 204, 113, 0);
+  }
+`;
+
+/** Styled Components */
+const AnimatedBox = styled(Box)({
+  animation: `${fadeInUp} 0.5s ease`,
+});
+
+const Card = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(2),
+  marginBottom: theme.spacing(2),
+  borderRadius: theme.shape.borderRadius,
+  cursor: "pointer",
+  transition: "transform 0.3s ease, box-shadow 0.3s ease",
+  animation: `${fadeInUp} 0.5s ease`,
+  "&:hover": {
+    transform: "scale(1.02)",
+    boxShadow: theme.shadows[4],
+  },
+}));
+
+const HoverButton = styled(Button)(({ theme }) => ({
+  transition: "transform 0.3s ease, background-color 0.3s ease",
+  "&:hover": {
+    transform: "scale(1.05)",
+    backgroundColor: theme.palette.action.hover,
+  },
+}));
+
+const PulseIconButton = styled(IconButton)(({ theme }) => ({
+  animation: `${pulse} 2s infinite`,
+}));
+
+/** Event Interface */
 interface Event {
   event_id: number;
   event_name: string;
@@ -37,6 +96,30 @@ interface Event {
   documents?: string[];
   enrolled?: boolean;
 }
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#38B2AC", // Replace this with your chosen color
+    },
+    secondary: {
+      main: "#2C7A7B", // Optional: Use a complementary darker shade
+    },
+    text: {
+      primary: "#2D3748",
+      secondary: "#718096",
+    },
+    background: {
+      default: "#EDF2F7", // Light gray background
+    },
+  },
+  typography: {
+    fontFamily: "Roboto, sans-serif",
+  },
+  shape: {
+    borderRadius: 12,
+  },
+});
 
 const Events: React.FC = () => {
   const [events, setEvents] = useState<Event[]>([]);
@@ -52,27 +135,26 @@ const Events: React.FC = () => {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const { data, error } = await getEvents(); // Replace with your Supabase query
+        const { data, error } = await getEvents();
         if (error) {
           console.error("Error fetching events from Supabase:", error);
           return;
         }
 
-        // Enrich events with dynamic dummy data
         const enrichedData = data.map((event: Event, index: number) => {
-          const config = eventConfigs[index % eventConfigs.length]; // Rotate through dummy configs
+          const config = eventConfigs[index % eventConfigs.length];
           return {
             ...event,
             attendees: config.attendees,
             location: event.location || "Online",
             agenda: config.agenda,
             documents: config.documents,
-            enrolled: Math.random() > 0.5, // Dummy logic for enrollment
+            enrolled: Math.random() > 0.5,
           };
         });
 
         setEvents(enrichedData);
-        setVisibleEvents(enrichedData); // Initially show all events
+        setVisibleEvents(enrichedData);
       } catch (error) {
         console.error("Error fetching events:", error);
       }
@@ -154,307 +236,164 @@ const Events: React.FC = () => {
   };
 
   return (
-    <Box display="flex" flexDirection="column" gap={4} padding={2}>
-      <Navbar />
+    <ThemeProvider theme={theme}>
+      <Box sx={{ backgroundColor: theme.palette.background.default, minHeight: "100vh" }}>
+        <Navbar />
 
-      {/* Tabs Section */}
-      <Box>
-        <Typography variant="h4" fontWeight="bold">
-          Bookings
-        </Typography>
-        <Typography variant="body2" color="textSecondary" sx={{ marginBottom: 2 }}>
-          See your scheduled events from your calendar events links.
-        </Typography>
-        <Tabs
-          value={activeTab}
-          onChange={handleTabChange}
-          variant="scrollable"
-          scrollButtons="auto"
-          textColor="primary"
-          indicatorColor="primary"
-          sx={{ borderBottom: 1, borderColor: "divider" }}
-        >
-          <Tab label="Upcoming" />
-          <Tab label="Pending" />
-          <Tab label="Recurring" />
-          <Tab label="Past" />
-          <Tab label="Cancelled" />
-        </Tabs>
-      </Box>
-
-      {selectedEvent ? (
-        // Styled detailed event view
-        <Box
-          sx={{
-            backgroundColor: "white",
-            borderRadius: 8,
-            boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.1)",
-            overflow: "hidden",
-          }}
-        >
-          {/* Header Section */}
-          <Box
-            sx={{
-              background: "linear-gradient(135deg, #2ecc71, #27ae60)", // Jade green gradient
-              padding: 4,
-              color: "white",
-              position: "relative",
-            }}
-          >
-            <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-              <Typography variant="h6" fontWeight="bold">
-                Event Details
-              </Typography>
-              <IconButton
-                onClick={handleCloseDetails}
-                sx={{
-                  backgroundColor: "rgba(255, 255, 255, 0.2)",
-                  color: "white",
-                  "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.3)" },
-                  borderRadius: "50%",
-                }}
-              >
-                <CloseIcon />
-              </IconButton>
-            </Box>
-            <Divider sx={{ borderColor: "white", mb: 2 }} />
-            <Typography variant="h4" fontWeight="bold" sx={{ mb: 1 }}>
-              {selectedEvent.event_name}
+        {/* Main Container */}
+        <Box display="flex" flexDirection="column" gap={4} padding={2} maxWidth="800px" margin="0 auto">
+          {/* Tabs Section */}
+          <Box>
+            <Typography variant="h4" fontWeight="bold" color="primary" gutterBottom>
+              Events
             </Typography>
-            <Box display="flex" alignItems="center" gap={2} mb={2}>
-              <AccessTimeIcon fontSize="small" />
-              <Typography variant="body2">
-                {new Date(selectedEvent.event_date).toLocaleDateString("en-US", {
-                  weekday: "short",
-                  day: "numeric",
-                  month: "short",
-                })}
-                , {new Date(selectedEvent.event_date).toLocaleTimeString("en-US", {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </Typography>
-            </Box>
-            <Box display="flex" gap={2}>
-              <Button
-                variant="contained"
-                startIcon={<AccessTimeIcon />}
-                sx={{
-                  backgroundColor: "white",
-                  color: "#2ecc71",
-                  textTransform: "none",
-                  "&:hover": { backgroundColor: "rgba(255, 255, 255, 0.8)" },
-                }}
-              >
-                Join with Google Meet
-              </Button>
-              <Button
-                variant="outlined"
-                startIcon={<KeyboardArrowDownIcon />}
-                sx={{
-                  borderColor: "white",
-                  color: "white",
-                  textTransform: "none",
-                  "&:hover": { borderColor: "rgba(255, 255, 255, 0.8)" },
-                }}
-              >
-                Going
-              </Button>
-            </Box>
+            <Typography variant="body2" color="textSecondary" sx={{ marginBottom: 2 }}>
+              See your scheduled events from your calendar events links.
+            </Typography>
+            <Tabs
+              value={activeTab}
+              onChange={handleTabChange}
+              variant="scrollable"
+              scrollButtons="auto"
+              textColor="primary"
+              indicatorColor="primary"
+              sx={{ borderBottom: 1, borderColor: "divider" }}
+            >
+              <Tab label="Upcoming" />
+              <Tab label="Pending" />
+              <Tab label="Recurring" />
+              <Tab label="Past" />
+              <Tab label="Cancelled" />
+            </Tabs>
           </Box>
 
-          <Divider />
-
-          {/* Attendees Section */}
-          <Box
-            sx={{
-              paddingX: 4,
-              paddingY: 3,
-              borderBottom: "1px solid #E0E0E0",
-            }}
-          >
-            <Typography variant="body1" fontWeight="bold" sx={{ mb: 1 }}>
-              {selectedEvent.attendees?.length} people invited
-            </Typography>
-            <Box display="flex" alignItems="center" gap={2}>
-              <AvatarGroup max={5}>
-                {selectedEvent.attendees?.map((avatar, index) => (
-                  <Avatar key={index} src={avatar} />
-                ))}
-              </AvatarGroup>
-              <Button
-                variant="outlined"
-                sx={{
-                  textTransform: "none",
-                  backgroundColor: "#F9FAFB",
-                  "&:hover": { backgroundColor: "#F3F4F6" },
-                }}
-              >
-                Add
-              </Button>
-            </Box>
-          </Box>
-
-          {/* Agenda Section */}
-          <Box
-            sx={{
-              paddingX: 4,
-              paddingY: 3,
-              borderBottom: "1px solid #E0E0E0",
-            }}
-          >
-            <Typography variant="body1" fontWeight="bold" mb={2}>
-              📝 Agenda
-            </Typography>
-            {selectedEvent.agenda?.map((item, index) => (
-              <Typography key={index} variant="body2" sx={{ mb: 1 }}>
-                {item}
-              </Typography>
-            ))}
-          </Box>
-
-          {/* Documents Section */}
-          <Box sx={{ paddingX: 4, paddingY: 3 }}>
-            <Typography variant="body1" fontWeight="bold" mb={2}>
-              📄 Documents
-            </Typography>
-            <Box display="flex" gap={1} flexWrap="wrap">
-              {selectedEvent.documents?.map((doc, index) => (
-                <Button
-                  key={index}
-                  variant="outlined"
-                  sx={{
-                    textTransform: "none",
-                    backgroundColor: "#F9FAFB",
-                    "&:hover": { backgroundColor: "#F3F4F6" },
-                  }}
+          {selectedEvent ? (
+            <AnimatedBox>
+              {/* Event Details */}
+              <Paper sx={{ padding: 3, position: "relative" }}>
+                <IconButton
+                  onClick={handleCloseDetails}
+                  sx={{ position: "absolute", top: 8, right: 8 }}
                 >
-                  {doc}
-                </Button>
+                  <CloseIcon />
+                </IconButton>
+                <Typography variant="h5" color="primary" gutterBottom>
+                  {selectedEvent.event_name}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" gutterBottom>
+                  {selectedEvent.description}
+                </Typography>
+                <Box display="flex" alignItems="center" mt={2} mb={1}>
+                  <AccessTimeIcon color="action" sx={{ marginRight: 1 }} />
+                  <Typography variant="body2" color="textSecondary">
+                    {new Date(selectedEvent.event_date).toLocaleString()}
+                  </Typography>
+                </Box>
+                <Box display="flex" alignItems="center" mb={2}>
+                  <RoomIcon color="action" sx={{ marginRight: 1 }} />
+                  <Typography variant="body2" color="textSecondary">
+                    {selectedEvent.location}
+                  </Typography>
+                </Box>
+                <Divider sx={{ marginY: 2 }} />
+                <Typography variant="h6" gutterBottom>
+                  Agenda
+                </Typography>
+                <ul>
+                  {selectedEvent.agenda?.map((item, index) => (
+                    <li key={index}>
+                      <Typography variant="body2" color="textSecondary">
+                        {item}
+                      </Typography>
+                    </li>
+                  ))}
+                </ul>
+                <Divider sx={{ marginY: 2 }} />
+                <Typography variant="h6" gutterBottom>
+                  Documents
+                </Typography>
+                <ul>
+                  {selectedEvent.documents?.map((doc, index) => (
+                    <li key={index}>
+                      <Typography variant="body2" color="secondary">
+                        {doc}
+                      </Typography>
+                    </li>
+                  ))}
+                </ul>
+                <Box display="flex" justifyContent="flex-end" mt={3}>
+                  <HoverButton variant="contained" color="primary" onClick={handleCloseDetails}>
+                    Close
+                  </HoverButton>
+                </Box>
+              </Paper>
+            </AnimatedBox>
+          ) : (
+            <Box>
+              {visibleEvents.map((event) => (
+                <Card key={event.event_id}>
+                  <Box display="flex" alignItems="center" justifyContent="space-between">
+                    <Box onClick={() => setSelectedEvent(event)}>
+                      <Typography variant="h6" color="primary">
+                        {event.event_name}
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary">
+                        {event.description}
+                      </Typography>
+                      <Box display="flex" alignItems="center" mt={1}>
+                        <AccessTimeIcon color="action" sx={{ marginRight: 0.5 }} />
+                        <Typography variant="body2" color="textSecondary">
+                          {new Date(event.event_date).toLocaleString()}
+                        </Typography>
+                      </Box>
+                      <Box display="flex" alignItems="center" mt={0.5}>
+                        <RoomIcon color="action" sx={{ marginRight: 0.5 }} />
+                        <Typography variant="body2" color="textSecondary">
+                          {event.location}
+                        </Typography>
+                      </Box>
+                    </Box>
+                    <Box>
+                      <Tooltip title="Options">
+                        <IconButton
+                          onClick={(e) => handleMenuOpen(e, event.event_id)}
+                          color="primary"
+                        >
+                          <KeyboardArrowDownIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Menu
+                        anchorEl={menuAnchor}
+                        open={Boolean(menuAnchor) && currentEventId === event.event_id}
+                        onClose={handleMenuClose}
+                      >
+                        {event.enrolled ? (
+                          <MenuItem onClick={handleDeregisterClick}>Deregister</MenuItem>
+                        ) : (
+                          <MenuItem onClick={handleRegisterClick}>Register</MenuItem>
+                        )}
+                      </Menu>
+                    </Box>
+                  </Box>
+                </Card>
               ))}
             </Box>
-          </Box>
+          )}
         </Box>
-      ) : (
-        // Card layout
-        <Box>
-          {visibleEvents.map((event) => (
-            <Box
-              key={event.event_id}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                padding: 4,
-                border: "1px solid #ddd",
-                borderRadius: "8px",
-                marginBottom: 2,
-                "&:hover": { backgroundColor: "#f9f9f9" },
-              }}
-              onClick={() => setSelectedEvent(event)}
-            >
-              {/* Date */}
-              <Box
-                sx={{
-                  flex: 1,
-                  textAlign: "center",
-                }}
-              >
-                <Typography variant="h5" sx={{ color: "darkgreen" }}>
-                  {new Date(event.event_date).toLocaleDateString("en-US", {
-                    weekday: "short",
-                  })}
-                </Typography>
-                <Typography variant="h3" sx={{ color: "darkgreen" }}>
-                  {new Date(event.event_date).toLocaleDateString("en-US", {
-                    day: "numeric",
-                  })}
-                </Typography>
-                <Typography variant="h6" sx={{ color: "darkgreen" }}>
-                  {new Date(event.event_date).toLocaleDateString("en-US", {
-                    month: "short",
-                  })}
-                </Typography>
-              </Box>
 
-              <Divider orientation="vertical" flexItem sx={{ marginX: 2 }} />
-
-              {/* Time and Location */}
-              <Box
-                sx={{
-                  flex: 2,
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <AccessTimeIcon fontSize="small" sx={{ marginRight: 0.5 }} />
-                <Typography variant="body2" sx={{ marginRight: 2 }}>
-                  {new Date(event.event_date).toLocaleTimeString("en-US", {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                </Typography>
-                <RoomIcon fontSize="small" sx={{ marginRight: 0.5 }} />
-                <Typography variant="body2">{event.location}</Typography>
-              </Box>
-
-              {/* Event Name and Avatars */}
-              <Box sx={{ flex: 3, textAlign: "center" }}>
-                <Typography variant="body1">{event.event_name}</Typography>
-                <AvatarGroup max={3} sx={{ justifyContent: "center", marginTop: 1 }}>
-                  {event.attendees?.map((avatar, index) => (
-                    <Avatar key={index} src={avatar} />
-                  ))}
-                </AvatarGroup>
-              </Box>
-
-              {/* Edit Button */}
-              <Box>
-                <Button
-                  sx={{
-                    padding: 1,
-                    backgroundColor: "#e0e0e0",
-                    color: "black",
-                    "&:hover": { backgroundColor: "#d6d6d6" },
-                  }}
-                  endIcon={<KeyboardArrowDownIcon />}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleMenuOpen(e, event.event_id);
-                  }}
-                >
-                  Edit
-                </Button>
-              </Box>
-            </Box>
-          ))}
-        </Box>
-      )}
-
-      {/* Menu for dropdown actions */}
-      <Menu
-        anchorEl={menuAnchor}
-        open={Boolean(menuAnchor)}
-        onClose={handleMenuClose}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-        transformOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-        <MenuItem onClick={handleRegisterClick}>Register</MenuItem>
-        <MenuItem onClick={handleDeregisterClick}>Deregister</MenuItem>
-      </Menu>
-
-      {/* Snackbar */}
-      <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={4000}
-        onClose={handleSnackbarClose}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      >
-        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: "100%" }}>
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
-    </Box>
+        {/* Snackbar */}
+        <Snackbar
+          open={snackbarOpen}
+          autoHideDuration={3000}
+          onClose={handleSnackbarClose}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        >
+          <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
+            {snackbarMessage}
+          </Alert>
+        </Snackbar>
+      </Box>
+    </ThemeProvider>
   );
 };
 
