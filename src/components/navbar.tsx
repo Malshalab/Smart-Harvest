@@ -14,10 +14,10 @@ const Navbar = () => {
     <AppBar
       position="sticky"
       sx={{
+        padding: "7px",
         bgcolor: "white",
         color: "black",
-        boxShadow: "none",
-        borderBottom: "1px solid #E0E0E0",
+        boxShadow: "0 2px 10px rgba(0, 0, 0, 0.3)",
       }}
     >
       <Container>
@@ -29,37 +29,33 @@ const Navbar = () => {
             alignItems: "center",
           }}
         >
-          {/* Left Section */}
           <Box sx={{ display: "flex", gap: 2 }}>
             <Link href="/">
-              <Button sx={{ textTransform: "none", color: "black" }}>Home</Button>
+              <Button sx={{ textTransform: "none", color: "black", fontSize: 20 }}>Home</Button>
             </Link>
-            <Button sx={{ textTransform: "none", color: "black" }}>About</Button>
             <Link href="/events" passHref>
-              <Button sx={{ textTransform: "none", color: "black" }}>
+              <Button sx={{ textTransform: "none", color: "black", fontSize: 20 }}>
                 Events
               </Button>
             </Link>
           </Box>
-
-          {/* Logo */}
           <Typography
-            variant="h6"
+            variant="h5"
             sx={{
               fontWeight: "bold",
               letterSpacing: "0.1rem",
               textAlign: "center",
+              color: "black",
             }}
           >
             SmartHarvest
           </Typography>
-
-          {/* Right Section */}
           <Box sx={{ display: "flex", gap: 2 }}>
-            <Button sx={{ textTransform: "none", color: "black" }}>Log in</Button>
+            <Button variant="outlined" sx={{ textTransform: "none", fontSize: 16, color: "black", borderRadius: 20, borderColor: "black" }}>Log in</Button>
             <Button
               variant="contained"
               sx={{
+                fontSize: 16,
                 textTransform: "none",
                 bgcolor: "black",
                 color: "white",

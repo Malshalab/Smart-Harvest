@@ -69,8 +69,8 @@ const Library = () => {
           {selectedCard.type === contentType.videos && (
             <iframe
               width="100%"
-              height="0px"
-              src={selectedCard.resourceLocation.replace("watch?v=", "embed/")} // Ensure proper YouTube embed link
+              height="0px" // Adjust height for video
+              src={selectedCard.resourceLocation} // Add `mute=1` to the embed link
               title={selectedCard.title}
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -81,7 +81,7 @@ const Library = () => {
                 marginTop: "20px",
               }}
             ></iframe>
-          )}          
+          )}
           {selectedCard.type === contentType.webPage && tutorialContentMap[selectedCard.resourceLocation as keyof typeof tutorialContentMap]}
         </Box>
       ) : (

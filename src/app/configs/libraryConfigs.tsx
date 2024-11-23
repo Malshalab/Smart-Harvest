@@ -174,7 +174,7 @@ const tabContent: tabContentType = {
           </video>
         ),
         title: '8 Hours of Robots Harvesting Strawberries and Tomatoes in 4K',
-        resourceLocation: 'https://www.youtube.com/embed/65ngjdTslYY',
+        resourceLocation: 'https://www.youtube.com/embed/65ngjdTslYY?mute=1',
       },
       {
         type: contentType.videos,
@@ -184,7 +184,7 @@ const tabContent: tabContentType = {
           </video>
         ),
         title: 'Smart Farm: Modern Methods For Harvesting, Sorting And Processing',
-        resourceLocation: 'https://www.youtube.com/embed/ol76iSC06bY',
+        resourceLocation: 'https://www.youtube.com/embed/ol76iSC06bY?mute=1',
       },
       {
         type: contentType.videos,
@@ -194,7 +194,7 @@ const tabContent: tabContentType = {
           </video>
         ),
         title: 'How Farmers Harvest Millions of Pecans',
-        resourceLocation: 'https://www.youtube.com/embed/LCA0VX2jzX0',
+        resourceLocation: 'https://www.youtube.com/embed/LCA0VX2jzX0?mute=1',
       },
       {
         type: contentType.videos,
@@ -204,7 +204,7 @@ const tabContent: tabContentType = {
           </video>
         ),
         title: 'The Future Of Farming: Smart Solutions For Efficient Harvesting And Processing',
-        resourceLocation: 'https://www.youtube.com/embed/wwH76bhCqh8',
+        resourceLocation: 'https://www.youtube.com/embed/wwH76bhCqh8?mute=1',
       },
     ],
     [tabName.certification]: [

@@ -71,7 +71,7 @@ const Card = styled(Paper)(({ theme }) => ({
 }));
 
 const HoverButton = styled(Button)(({ theme }) => ({
-  transition: "transform 0.3s ease, background-color 0.3s ease",
+  transition: "transform 0.3s ease, backgroundColor 0.3s ease",
   "&:hover": {
     transform: "scale(1.05)",
     backgroundColor: theme.palette.action.hover,
@@ -100,9 +100,11 @@ interface Event {
 const theme = createTheme({
   palette: {
     primary: {
+      main: "#000000",
       main: "#000000", 
     },
     secondary: {
+      main: "#000000",
       main: "#000000", 
     },
     text: {
@@ -110,6 +112,7 @@ const theme = createTheme({
       secondary: "#718096",
     },
     background: {
+      default: "#EDF2F7",
       default: "#EDF2F7", 
     },
   },
@@ -169,12 +172,16 @@ const Events: React.FC = () => {
 
     switch (tabIndex) {
       case 0: // Upcoming
-        filteredEvents = events.filter((event) => event.enrolled && new Date(event.event_date) > now);
+        filteredEvents = events.filter(
+          (event) => event.enrolled && new Date(event.event_date) > now
+        );
         break;
       case 1: // Pending
-        filteredEvents = events.filter((event) => !event.enrolled && new Date(event.event_date) > now);
+        filteredEvents = events.filter(
+          (event) => !event.enrolled && new Date(event.event_date) > now
+        );
         break;
-      case 3: // Past
+      case 2: // Past
         filteredEvents = events.filter((event) => new Date(event.event_date) < now);
         break;
       default:
@@ -261,9 +268,7 @@ const Events: React.FC = () => {
             >
               <Tab label="Upcoming" />
               <Tab label="Pending" />
-              <Tab label="Recurring" />
               <Tab label="Past" />
-              <Tab label="Cancelled" />
             </Tabs>
           </Box>
 
