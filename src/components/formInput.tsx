@@ -6,7 +6,6 @@ type FormInputProps = TextFieldProps & {
   value: string | number;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 };
-
 const FormInput: React.FC<FormInputProps> = ({ label, value, onChange, ...props }) => {
   return (
     <TextField
