@@ -11,14 +11,17 @@ import {
   Button,
   Divider,
   IconButton,
+  Menu,
+  MenuItem,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import RoomIcon from "@mui/icons-material/Room";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import CloseIcon from "@mui/icons-material/Close";
-import AddIcon from "@mui/icons-material/Add";
 import Navbar from "@/components/navbar";
-import { getEvents } from "@/api/events/eventsActions"; // Replace this with your Supabase query
+import { getEvents } from "@/api/events/eventsActions"; // Replace with your Supabase query
 import { eventConfigs } from "@/app/configs/eventConfigs"; // Adjust the path based on your project structure
 
 interface Event {
@@ -40,6 +43,11 @@ const Events: React.FC = () => {
   const [visibleEvents, setVisibleEvents] = useState<Event[]>([]);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [activeTab, setActiveTab] = useState(0);
+  const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
+  const [currentEventId, setCurrentEventId] = useState<number | null>(null);
+  const [snackbarMessage, setSnackbarMessage] = useState<string | null>(null);
+  const [snackbarSeverity, setSnackbarSeverity] = useState<"success" | "error">("success");
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -97,6 +105,48 @@ const Events: React.FC = () => {
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setActiveTab(newValue);
     filterEvents(newValue);
+  };
+
+  const handleMenuOpen = (event: React.MouseEvent<HTMLButtonElement>, eventId: number) => {
+    setMenuAnchor(event.currentTarget);
+    setCurrentEventId(eventId);
+  };
+
+  const handleMenuClose = () => {
+    setMenuAnchor(null);
+    setCurrentEventId(null);
+  };
+
+  const handleRegisterClick = () => {
+    if (currentEventId !== null) {
+      const eventIndex = events.findIndex((e) => e.event_id === currentEventId);
+      if (eventIndex >= 0) {
+        events[eventIndex].enrolled = true;
+        setSnackbarMessage("Successfully registered for the event!");
+        setSnackbarSeverity("success");
+        filterEvents(activeTab);
+      }
+    }
+    handleMenuClose();
+    setSnackbarOpen(true);
+  };
+
+  const handleDeregisterClick = () => {
+    if (currentEventId !== null) {
+      const eventIndex = events.findIndex((e) => e.event_id === currentEventId);
+      if (eventIndex >= 0) {
+        events[eventIndex].enrolled = false;
+        setSnackbarMessage("Successfully deregistered from the event!");
+        setSnackbarSeverity("success");
+        filterEvents(activeTab);
+      }
+    }
+    handleMenuClose();
+    setSnackbarOpen(true);
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
   };
 
   const handleCloseDetails = () => {
@@ -223,11 +273,11 @@ const Events: React.FC = () => {
               borderBottom: "1px solid #E0E0E0",
             }}
           >
-            <Typography variant="body1" fontWeight="bold" sx={{ mb: 2 }}>
-              People Invited
+            <Typography variant="body1" fontWeight="bold" sx={{ mb: 1 }}>
+              {selectedEvent.attendees?.length} people invited
             </Typography>
             <Box display="flex" alignItems="center" gap={2}>
-              <AvatarGroup max={5} sx={{ flexShrink: 0 }}>
+              <AvatarGroup max={5}>
                 {selectedEvent.attendees?.map((avatar, index) => (
                   <Avatar key={index} src={avatar} />
                 ))}
@@ -237,11 +287,8 @@ const Events: React.FC = () => {
                 sx={{
                   textTransform: "none",
                   backgroundColor: "#F9FAFB",
-                  color: "#0275d8",
-                  fontWeight: "bold",
-                  "&:hover": { backgroundColor: "#E5E7EB" },
+                  "&:hover": { backgroundColor: "#F3F4F6" },
                 }}
-                startIcon={<AddIcon />}
               >
                 Add
               </Button>
@@ -360,10 +407,53 @@ const Events: React.FC = () => {
                   ))}
                 </AvatarGroup>
               </Box>
+
+              {/* Edit Button */}
+              <Box>
+                <Button
+                  sx={{
+                    padding: 1,
+                    backgroundColor: "#e0e0e0",
+                    color: "black",
+                    "&:hover": { backgroundColor: "#d6d6d6" },
+                  }}
+                  endIcon={<KeyboardArrowDownIcon />}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleMenuOpen(e, event.event_id);
+                  }}
+                >
+                  Edit
+                </Button>
+              </Box>
             </Box>
           ))}
         </Box>
       )}
+
+      {/* Menu for dropdown actions */}
+      <Menu
+        anchorEl={menuAnchor}
+        open={Boolean(menuAnchor)}
+        onClose={handleMenuClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        transformOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <MenuItem onClick={handleRegisterClick}>Register</MenuItem>
+        <MenuItem onClick={handleDeregisterClick}>Deregister</MenuItem>
+      </Menu>
+
+      {/* Snackbar */}
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={4000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: "100%" }}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
