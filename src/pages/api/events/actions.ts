@@ -28,6 +28,7 @@ export async function createEvent(newEvent:sh_event){
         console.log(error)
     }
     console.log(data)
+    return data
     
 }
 
@@ -54,6 +55,7 @@ export async function updateEvent(updatedEventDetails:sh_eventUpdated){
         console.log(error)
     }
     console.log(data)
+    return data
 }
 
 // Delete event
@@ -68,6 +70,7 @@ export async function deleteEvent(eventId:number){
         console.log(error)
     }
     console.log(data)
+    return data
 }
 
 // Get all events
@@ -87,9 +90,11 @@ export async function getEventById(id:number){
 
     //error handling
     if(error){
-        return data
+        
+        console.log(error)
     }
-    console.log(error)
+    console.log(data)
+    return data
 }
 
 // Add User to event_registration table - post
