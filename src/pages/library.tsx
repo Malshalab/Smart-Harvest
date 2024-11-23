@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Box, IconButton, Card, CardContent, Typography, Button } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack"; // Import back icon
-import { contentMetaData, contentType, tabContent, tabName } from "@/app/configs/libraryConfigs";
+import { contentMetaData, contentType, tabContent, tabName, tutorialContentMap } from "@/app/configs/libraryConfigs";
 import SearchBar from "@/app/search/searchBar";
 import { CardCover } from "@mui/joy";
 
@@ -53,17 +53,19 @@ const Library = () => {
           <Typography variant="h4" sx={{ marginBottom: "20px" }}>
             {selectedCard.title}
           </Typography>
-          <embed
-            src={selectedCard.resourceLocation} // Assuming `resourceLocation` contains the PDF file path
-            type="application/pdf"
-            style={{
-              borderRadius: 10,
-              marginTop: "17px",
-              width: "100%",
-              height: "80vh", // Adjust height as needed
-              border: "none",
-            }}
-          />
+          {selectedCard.type !== contentType.webPage && (
+            <embed
+              src={selectedCard.resourceLocation} // Assuming `resourceLocation` contains the PDF file path
+              type="application/pdf"
+              style={{
+                borderRadius: 10,
+                marginTop: "17px",
+                width: "100%",
+                height: selectedCard.type === contentType.videos ? "50vh" : "80vh", // Adjust height as needed
+                border: "none",
+              }}
+            />
+          )}
           {selectedCard.type === contentType.videos && (
             <iframe
               width="100%"
@@ -80,9 +82,7 @@ const Library = () => {
               }}
             ></iframe>
           )}          
-          {/* {selectedCard.type === contentType.webPage &&
-
-          } */}
+          {selectedCard.type === contentType.webPage && tutorialContentMap[selectedCard.resourceLocation as keyof typeof tutorialContentMap]}
         </Box>
       ) : (
         // Card Grid
