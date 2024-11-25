@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -8,8 +9,9 @@ interface JsonDisplayProps {
   jsonData: object;
 }
 
-const JsonDisplay = ({ jsonData }:any) => {
-  const jsonString = JSON.stringify(jsonData, null, 2)
+const JsonDisplay = ({ jsonData }:JsonDisplayProps) => {
+  // console.log('received param: ', jsonData)
+  const jsonString = jsonData ? JSON.stringify(jsonData, null, 2) : '{}'
 
   return (
     <Box

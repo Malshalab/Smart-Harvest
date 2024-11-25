@@ -18,7 +18,7 @@ export interface event_supabase{
 export interface sh_event{
     eventName:string,
     eventDescription:string, 
-    eventDate:Date, 
+    eventDate:Date|null, 
     creatingUser:number // set using auth and current user
 }
 
@@ -28,7 +28,7 @@ export interface sh_eventUpdated{
     eventId:number,
     eventName?:string,
     eventDescription?:string, 
-    eventDate?:Date, 
+    eventDate?:Date|null, 
 }
 
 //this type is for mapping event_registration table
