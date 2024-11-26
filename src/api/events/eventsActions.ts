@@ -38,19 +38,20 @@ export async function updateEvent(updatedEventDetails:sh_eventUpdated){
     // they are null or not, that way we can only update needed properties
     const upsert:any = {}
     // now check which properties are not null/undefined, those that aren't can be added to upsert
-    if(updatedEventDetails.eventName!== null && updatedEventDetails.eventName!==undefined) upsert.event_name = updatedEventDetails.eventName
-    if(updatedEventDetails.eventDate!== null && updatedEventDetails.eventDate!==undefined) upsert.event_date = updatedEventDetails.eventDate
-    if(updatedEventDetails.eventDescription!== null && updatedEventDetails.eventDescription!==undefined) upsert.description = updatedEventDetails.eventDescription
+    if(updatedEventDetails.eventName!== null && updatedEventDetails.eventName!==undefined && updatedEventDetails.eventName!=='') upsert.event_name = updatedEventDetails.eventName
+    if(updatedEventDetails.eventDate!== null && updatedEventDetails.eventDate!==undefined && updatedEventDetails.eventDate!==new Date('')) upsert.event_date = updatedEventDetails.eventDate
+    if(updatedEventDetails.eventDescription!== null && updatedEventDetails.eventDescription!==undefined &&  updatedEventDetails.eventDescription!=='') upsert.description = updatedEventDetails.eventDescription
 
     // now upsert
     try {
         const { data, error } = await supabase
-        .from(eventTableAlias)
-        .update({ 
-            ...upsert
-        })
-        .eq('event_id', `${updatedEventDetails.eventId}`)
-        .select()
+            .from(eventTableAlias)
+            .update({ 
+                ...upsert
+            })
+            .eq('event_id', `${updatedEventDetails.eventId}`)
+            .select()
+        return { data }
     } catch (error) {
         console.log(error)
         return { error }
@@ -76,8 +77,8 @@ export async function deleteEvent(eventId:number){
 export async function getEvents(){
     try {
         const { data, error} = await supabase 
-        .from(eventTableAlias)
-        .select('*')
+            .from(eventTableAlias)
+            .select('*')
         return { data }
     } catch (error) {
         return { error }
@@ -90,22 +91,13 @@ export async function getEvents(){
 export async function getEventById(id:number){
     try {
         const { data, error } = await supabase
-        .from(eventTableAlias)
-        .select()
-        .eq('event_id', `${id}`)
+            .from(eventTableAlias)
+            .select()
+            .eq('event_id', `${id}`)
 
         console.log(data)
         return {data}
     } catch (error) {
         return { error }
     }
-    
-
-    //error handling
-    // if(error){
-        
-    //     console.log(error)
-    //     return { error }
-    // }
-    
 }

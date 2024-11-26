@@ -30,5 +30,4 @@ export interface sh_contentUpdated{
     contentType?: string,
     contentContent?: string,
     contentCategory?: string,
-    contentUpdatedAt: Date
 }

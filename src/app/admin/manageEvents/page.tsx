@@ -81,6 +81,10 @@ function Page(){
         }
         else{
             setEventIdInputError(true)
+            setEventInput((prevState) => ({
+                ...prevState,
+                event_id: undefined
+            }))
         }   
     }
 
@@ -287,21 +291,19 @@ function Page(){
                             {/* <input type="text" /> */}
                             <Grid container rowSpacing={1} columnSpacing={2} size={12} sx={{marginTop:'10px'}}>
                                 <Grid size={12}>
-                                    <FormInput
-                                        type='number'
+                                    <TextField 
+                                        type='number' 
                                         label={'Event Id'}
                                         name='event_id'
-                                        value={eventInput.event_id!}
+                                        value={eventInput.event_id} 
                                         onChange={handleEventIdChange}
                                         required
-                                        slotProps={{
-                                            input:{
-                                                inputMode:'numeric',
-                                            }
-                                        }}
-                                        error={eventIdInputError || !eventInput.event_id}
-                                        helperText={eventIdInputError ? 'Please enter a number greater than 0' : ''}
-                                    />
+                                        error = {eventIdInputError}
+                                        helperText={eventIdInputError ? 'Please enter a number greater than 0' : ''}  
+                                        maxRows={1}
+                                        fullWidth
+                                        variant="outlined"
+                                    /> 
                                 </Grid>
                                 {/* second row of inputs for this form */}
                                 <Grid size={6}>
@@ -315,12 +317,23 @@ function Page(){
                                 {/* wrap the next input field in a localization adapter in order to provide support for dates*/}
                                 <Grid size={6}>
                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                        <DateTimePicker label={'Event Date'} name='event_date' value={eventInput.event_date ? dayjs(eventInput.event_date) : null} onChange={handleDateChange} sx={{width:'100%'}}/>
+                                        <DateTimePicker 
+                                            label={'Event Date'} 
+                                            name='event_date' 
+                                            value={eventInput.event_date ? dayjs(eventInput.event_date) : null} 
+                                            onChange={handleDateChange} 
+                                            sx={{width:'100%'}}/>
                                     </LocalizationProvider>
                                 </Grid>
                                 {/* third row of inputs for this form */}
                                 <Grid size={12}>
-                                    <MultiLineFormInput label={'Description'} name='description' value={eventInput.description!} onChange={handleDescriptionChange} fullWidth></MultiLineFormInput>
+                                    <MultiLineFormInput 
+                                        label={'Description'} 
+                                        name='description' 
+                                        value={eventInput.description!} 
+                                        onChange={handleDescriptionChange} 
+                                        fullWidth
+                                    />
                                 </Grid>
                                 <Grid size={12}>
                                     <Button variant='outlined' type='submit' fullWidth>Update</Button>
