@@ -1,0 +1,13 @@
+
+
+//this type is for mapping user_profile table
+export interface user_profile_supabase{
+    profile_id?:number,
+    first_name?:string,
+    last_name?:string,
+    contract_number?:number,
+    preferences?:JSON,
+    created_at?:Date,
+    updated_at?:Date,
+    user_id?:number
+}
